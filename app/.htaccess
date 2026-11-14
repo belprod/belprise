@@ -1,0 +1,2 @@
+# Never served: app/ must stay outside the web root.
+Require all denied

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>belprise — la revue vidéo à l’image près, hébergée en France</title>
+    <meta
+      name="description"
+      content="Partagez vos vidéos par simple lien, recueillez des révisions posées à l’image près, faites valider et livrez le master. Hébergé en France, sans pistage. Bêta gratuite : 100 Go offerts."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content="belprise — la revue vidéo à l’image près" />
+    <meta property="og:description" content="Révisions au timecode exact, versions, validation et livraison du master. Hébergé en France, sans pistage." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <link rel="canonical" href="https://belprise.fr/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="../frontend/src/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="../frontend/src/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="../frontend/src/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/src/site.css" />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+
+    <header class="header">
+      <div class="wrap header__inner">
+        <a class="wordmark" href="/" aria-label="belprise, accueil">belprise<span class="wordmark__dot">.</span></a>
+        <nav class="nav" aria-label="Sections">
+          <a href="#fonctionnalites">Fonctionnalités</a>
+          <a href="#beta">Bêta</a>
+          <a href="#questions">Questions</a>
+        </nav>
+        <div class="header__actions">
+          <a class="btn header__signin" href="%VITE_APP_URL%/admin">Connexion</a>
+          <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Accès bêta</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <section class="wrap hero" aria-labelledby="titre">
+        <div>
+          <p class="eyebrow">// Revue vidéo pour les créatifs</p>
+          <h1 class="display hero__title" id="titre">Vos clients révisent. <em>À l’image près.</em></h1>
+          <p class="lead">
+            Partagez une vidéo par simple lien, recueillez des révisions posées sur l’instant exact, faites valider la bonne
+            version et livrez le master. Sans compte pour vos clients, sans pistage, hébergé en France.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès bêta</a>
+            <a class="btn" href="#fonctionnalites">Voir les fonctionnalités</a>
+          </div>
+          <p class="hero__note muted">Bêta gratuite · 100 Go offerts · places limitées</p>
+        </div>
+
+        <figure class="mock" aria-label="Aperçu : une vidéo avec ses révisions placées sur la timeline, et le panneau des révisions.">
+          <div class="mock__screen" aria-hidden="true">
+            <p class="mock__overlay"><span class="mono">01:00:04:10</span>Claire : le logo arrive un peu tôt</p>
+          </div>
+          <div class="mock__bar" aria-hidden="true">
+            <div class="mock__track">
+              <span class="mock__progress"></span>
+              <span class="mock__marker mock__marker--todo mock__marker--at14"></span>
+              <span class="mock__marker mock__marker--range mock__marker--at52"></span>
+              <span class="mock__marker mock__marker--done mock__marker--at80"></span>
+            </div>
+            <div class="mock__controls"><span class="mono">01:00:12:08</span><span class="mono">25 i/s · V3</span></div>
+          </div>
+          <div class="mock__panel" aria-hidden="true">
+            <p class="mock__panel-title">Révisions</p>
+            <div class="mock__item">
+              <p class="mock__item-head"><span class="mock__who">Claire</span><span class="mock__tc">01:00:04:10</span><span class="pill pill--todo">À faire</span></p>
+              <p>Le logo arrive un peu tôt, on peut le décaler ?</p>
+            </div>
+            <div class="mock__item">
+              <p class="mock__item-head"><span class="mock__who">Marc</span><span class="mock__tc">01:00:22 → 26:14</span><span class="pill pill--done">Fait</span></p>
+              <p>Étalonnage plus froid sur ce passage.</p>
+              <p class="mock__reply">Corrigé dans la V3.</p>
+            </div>
+          </div>
+        </figure>
+      </section>
+
+      <section class="section showcase" id="fonctionnalites" aria-labelledby="titre-fonctionnalites">
+        <div class="wrap">
+          <div class="section__head section__head--center">
+            <p class="eyebrow">// Fonctionnalités</p>
+            <h2 class="display section__title" id="titre-fonctionnalites">Tout le cycle de revue, <em>au même endroit.</em></h2>
+          </div>
+
+          <div class="show">
+            <div class="show__text">
+              <span class="show__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+              <h3 class="display show__title">Des retours qui tombent pile.</h3>
+              <p class="lead">Chaque révision se place sur l’image, ou sur une plage. Fini les « vers 1 min 20 à peu près ».</p>
+            </div>
+            <div class="vis vis--timeline" aria-hidden="true">
+              <div class="vis__frame vis__frame--sunset"><span class="vis__chip"><span class="mono">01:00:04:10</span> Logo un peu tôt</span></div>
+              <div class="vis__track">
+                <span class="vis__pin vis__pin--yellow vis__pin--a"></span>
+                <span class="vis__span vis__span--violet"></span>
+                <span class="vis__pin vis__pin--green vis__pin--c"></span>
+                <span class="vis__pin vis__pin--pink vis__pin--d"></span>
+              </div>
+              <div class="vis__tags"><span class="tag tag--yellow">À faire</span><span class="tag tag--green">Fait</span><span class="tag tag--pink">Refusé</span></div>
+            </div>
+          </div>
+
+          <div class="show show--reverse">
+            <div class="show__text">
+              <span class="show__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 2-1 3-1a4 4 0 0 0 4-4c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/></svg></span>
+              <h3 class="display show__title">Un espace à l’image de chaque client.</h3>
+              <p class="lead">Son logo, ses couleurs, ses vidéos. Il ouvre un lien, c’est tout.</p>
+            </div>
+            <div class="vis vis--space" aria-hidden="true">
+              <div class="space__head"><span class="space__logo"></span><span class="space__name">Maison Aurore</span></div>
+              <div class="space__grid">
+                <span class="space__card space__card--a"><span class="tag tag--green">Validé</span></span>
+                <span class="space__card space__card--b"><span class="tag tag--yellow">À revoir</span></span>
+                <span class="space__card space__card--c"><span class="tag tag--violet">À valider</span></span>
+                <span class="space__card space__card--d"><span class="tag tag--green">Validé</span></span>
+                <span class="space__card space__card--e"><span class="tag tag--violet">À valider</span></span>
+                <span class="space__card space__card--f"><span class="tag tag--green">Validé</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="show">
+            <div class="show__text">
+              <span class="show__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+              <h3 class="display show__title">Validé. Livré.</h3>
+              <p class="lead">Les versions s’enchaînent, le client valide la bonne, et récupère son master.</p>
+            </div>
+            <div class="vis vis--versions" aria-hidden="true">
+              <div class="versions__tabs"><span>V1</span><span>V2</span><span class="versions__tab--on">V3</span></div>
+              <div class="vis__frame vis__frame--ocean"></div>
+              <div class="versions__foot">
+                <span class="versions__ok"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg> Validée par Claire</span>
+                <span class="versions__dl"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> Master</span>
+              </div>
+            </div>
+          </div>
+
+          <ul class="features">
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></span>
+              <h3 class="feature__title">Révisions à l’image près</h3>
+              <p>Sur un instant ou une plage, au timecode exact.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg></span>
+              <h3 class="feature__title">Versions</h3>
+              <p>Toutes les versions d’une vidéo, au même endroit.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg></span>
+              <h3 class="feature__title">Validation</h3>
+              <p>Le client valide en un clic. C’est noté.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg></span>
+              <h3 class="feature__title">Export vers le montage</h3>
+              <p>Les révisions arrivent en marqueurs dans Resolve.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2s-1-2 0-3 2-1 3-1a4 4 0 0 0 4-4c0-4.4-4-8-9-8Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7" r="1"/></svg></span>
+              <h3 class="feature__title">À vos couleurs</h3>
+              <p>Un espace par client, à son image.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
+              <h3 class="feature__title">Gros fichiers</h3>
+              <p>Des masters de plusieurs dizaines de Go, sans stress.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+              <h3 class="feature__title">Collections</h3>
+              <p>Vos meilleures références, en un lien.</p>
+            </li>
+            <li class="feature">
+              <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg></span>
+              <h3 class="feature__title">Équipe</h3>
+              <p>Jusqu’à 10 personnes, chacune son rôle.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section trust" aria-labelledby="titre-confidentialite">
+        <div class="wrap">
+          <div class="section__head section__head--center">
+            <p class="eyebrow">// Confidentialité</p>
+            <h2 class="display section__title" id="titre-confidentialite">Vos images <em>restent les vôtres.</em></h2>
+          </div>
+          <ul class="trust__list">
+            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span><strong>Hébergé en France</strong></li>
+            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a12 12 0 0 1-2.7 3.8M6.6 6.6C4.2 8 2.6 10.2 2 12c1 2.5 5 7 10 7 1.7 0 3.2-.5 4.5-1.2"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></span><strong>Aucun pistage</strong></li>
+            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><strong>Liens privés</strong></li>
+            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span><strong>Espaces cloisonnés</strong></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section pricing" id="beta" aria-labelledby="titre-beta">
+        <div class="pricing__glow" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="section__head section__head--center">
+            <p class="eyebrow">// Bêta</p>
+            <h2 class="display section__title" id="titre-beta">Une seule offre, <em>et elle est gratuite.</em></h2>
+            <p class="lead">Belprise ouvre en bêta. Rejoignez les premiers studios à l’utiliser, et aidez-nous à le façonner.</p>
+          </div>
+
+          <div class="plans">
+            <div class="plan plan--featured plan--beta">
+              <span class="plan__badge">Places limitées</span>
+              <p class="plan__name">Bêta-testeur</p>
+              <p class="plan__who">Studios, indépendants, agences</p>
+              <p class="plan__storage">100 Go de stockage</p>
+              <p class="plan__price"><span><span class="plan__amount">0 €</span><span class="plan__period">pendant toute la bêta · sans carte bancaire</span></span></p>
+              <ul class="plan__list">
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Toutes les fonctionnalités</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> 10 utilisateurs, clients illimités</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Hébergé en France, sans pistage</li>
+              </ul>
+              <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès</a>
+            </div>
+          </div>
+
+          <p class="pricing__note muted">
+            Chaque espace est ouvert à la main, au fil des demandes : nous gardons ainsi un service rapide pour tous, et mesurons
+            l’usage réel avant de dimensionner la suite.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="questions" aria-labelledby="titre-questions">
+        <div class="wrap">
+          <div class="section__head">
+            <p class="eyebrow">// Questions</p>
+            <h2 class="display section__title" id="titre-questions">Questions fréquentes</h2>
+          </div>
+          <div class="faq">
+            <details>
+              <summary>Mes clients doivent-ils créer un compte ?</summary>
+              <p>Non. Ils ouvrent votre lien, indiquent leur nom, et c’est parti.</p>
+            </details>
+            <details>
+              <summary>Quels fichiers puis-je envoyer ?</summary>
+              <p>Des MP4 en H.264, jusqu’en 4K. Le timecode du montage est conservé.</p>
+            </details>
+            <details>
+              <summary>Les révisions arrivent-elles dans mon logiciel de montage ?</summary>
+              <p>Oui, dans DaVinci Resolve, sous forme de marqueurs. Premiere Pro arrive bientôt.</p>
+            </details>
+            <details>
+              <summary>Où sont hébergées mes vidéos ?</summary>
+              <p>En France, sans aucun service tiers.</p>
+            </details>
+            <details>
+              <summary>Combien coûte la bêta ?</summary>
+              <p>Rien. 100 Go offerts pendant toute la bêta, sans carte bancaire.</p>
+            </details>
+            <details>
+              <summary>Pourquoi des places limitées ?</summary>
+              <p>Nous ouvrons les espaces un par un pour garder un service rapide, et mesurer l’usage réel avant d’agrandir l’infrastructure.</p>
+            </details>
+            <details>
+              <summary>Que se passe-t-il si mon stockage est plein ?</summary>
+              <p>Belprise vous prévient avant. Archivez les vidéos terminées ou supprimez celles dont vous n’avez plus besoin.</p>
+            </details>
+            <details>
+              <summary>Et après la bêta ?</summary>
+              <p>Vous serez prévenu bien à l’avance. Vous pouvez partir à tout moment : vos masters restent téléchargeables.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta" aria-labelledby="titre-cta">
+        <div class="wrap">
+          <h2 class="display cta__title" id="titre-cta">Votre prochaine revue <em>commence ici.</em></h2>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès bêta</a>
+            <a class="btn" href="%VITE_APP_URL%/admin">Se connecter</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer__inner">
+        <p class="signature"><span class="wordmark wordmark--small">belprise<span class="wordmark__dot">.</span></span> · propulsé par <a href="https://belprod.fr">belprod</a></p>
+        <nav aria-label="Informations">
+          <a href="/mentions-legales.html">Mentions légales</a>
+          <a href="/cgu.html">Conditions d’utilisation</a>
+          <a href="/confidentialite.html">Confidentialité</a>
+          <a href="mailto:contact@belprise.fr">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

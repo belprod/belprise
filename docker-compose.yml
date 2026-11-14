@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+      target: dev
+    image: belprise:dev
+    ports:
+      - "8080:80"
+      - "8090:8090"
+    volumes:
+      - .:/var/www/belprise
+    restart: unless-stopped

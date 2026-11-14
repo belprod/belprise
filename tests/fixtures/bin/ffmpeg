@@ -1,0 +1,41 @@
+#!/bin/sh
+# Fake FFmpeg for the tests (tests/php/ServerEncodingTest.php): no video work,
+# the same files as the real one: HLS (master, playlist, one fragmented MP4),
+# or the JPEG images asked for (poster, thumbnail, thumbnail sheet).
+#   FAKE_FFMPEG=ok (default) | fail (error, exit 1) | killed (stops itself, like a host's limit)
+#   FAKE_FFMPEG_LOG=file     the arguments of the last HLS run, one per line
+for arg in "$@"; do
+    if [ "$arg" = "-version" ]; then
+        echo "ffmpeg version 9.9-fake Copyright (c) the tests"
+        exit 0
+    fi
+done
+hls=0
+for arg in "$@"; do
+    case "$arg" in *.m3u8) hls=1 ;; esac
+done
+if [ "$hls" = 0 ]; then
+    # Images: every *.jpg output is written (a JPEG start of image is enough here).
+    for arg in "$@"; do
+        case "$arg" in *.jpg) printf '\377\330\377\340fake' > "$arg" ;; esac
+    done
+    exit 0
+fi
+[ -n "$FAKE_FFMPEG_LOG" ] && printf '%s\n' "$@" > "$FAKE_FFMPEG_LOG"
+for last in "$@"; do :; done
+dir=$(dirname "$last")
+echo "out_time_us=1000000"
+echo "progress=continue"
+case "${FAKE_FFMPEG:-ok}" in
+    fail)
+        echo "Invalid data found when processing input" >&2
+        exit 1 ;;
+    killed)
+        kill -9 $$ ;;
+esac
+printf '#EXTM3U\n#EXT-X-VERSION:7\n#EXT-X-STREAM-INF:BANDWIDTH=3426000,RESOLUTION=1280x720,CODECS="avc1.64001f,mp4a.40.2"\nplaylist-0.m3u8\n' > "$dir/master.m3u8"
+printf '#EXTM3U\n#EXT-X-VERSION:7\n#EXT-X-TARGETDURATION:2\n#EXT-X-PLAYLIST-TYPE:VOD\n#EXT-X-MAP:URI="playlist-0.mp4",BYTERANGE="100@0"\n#EXTINF:2.000000,\n#EXT-X-BYTERANGE:900@100\nplaylist-0.mp4\n#EXT-X-ENDLIST\n' > "$dir/playlist-0.m3u8"
+head -c 1000 /dev/zero > "$dir/playlist-0.mp4"
+echo "out_time_us=2000000"
+echo "progress=end"
+exit 0

@@ -1,0 +1,84 @@
+# A version: push a tag v3.x.y (equal to package.json). Tests, then the archive
+# and its SHA-256, the Docker image on ghcr.io and the GitHub release with the
+# notes of CHANGELOG.md.
+name: Version
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  tests:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Version of the tag and of package.json
+        id: version
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          test "$version" = "$(node -p "require('./package.json').version")" || { echo "Tag $GITHUB_REF_NAME ≠ package.json"; exit 1; }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "major=${version%%.*}" >> "$GITHUB_OUTPUT"
+
+      - name: Archive and SHA-256
+        run: |
+          scripts/build-dist.sh
+          cd dist && sha256sum "belprise-${{ steps.version.outputs.version }}.zip" > "belprise-${{ steps.version.outputs.version }}.zip.sha256"
+          unzip -q "belprise-${{ steps.version.outputs.version }}.zip" -d release
+
+      - name: Notes from CHANGELOG.md
+        run: |
+          awk -v v="${{ steps.version.outputs.version }}" '
+            $0 ~ "^## " v "( |$)" { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "No section for this version in CHANGELOG.md"; exit 1; }
+          printf '{"version":"%s","url":"https://belprise.fr/versions/"}\n' "${{ steps.version.outputs.version }}" > dist/versions.json
+
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: dist/release/belprise-${{ steps.version.outputs.version }}
+          file: dist/release/belprise-${{ steps.version.outputs.version }}/docker/Dockerfile.release
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/belprod/belprise:${{ steps.version.outputs.version }}
+            ghcr.io/belprod/belprise:${{ steps.version.outputs.major }}
+            ghcr.io/belprod/belprise:latest
+          labels: |
+            org.opencontainers.image.source=https://github.com/belprod/belprise
+            org.opencontainers.image.licenses=PolyForm-Shield-1.0.0
+            org.opencontainers.image.version=${{ steps.version.outputs.version }}
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "belprise ${{ steps.version.outputs.version }}" \
+            --notes-file notes.md \
+            "dist/belprise-${{ steps.version.outputs.version }}.zip" \
+            "dist/belprise-${{ steps.version.outputs.version }}.zip.sha256" \
+            dist/versions.json

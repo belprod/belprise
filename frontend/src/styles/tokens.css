@@ -1,0 +1,57 @@
+/* Belprise design tokens — CAHIER_DES_CHARGES.md §8. */
+
+:root {
+  /* Surfaces */
+  --bg: #0a0a0b;
+  --surface-1: #0f0f11;
+  --surface-2: #141416;
+  --surface-3: #18181b;
+
+  /* Borders */
+  --border: #232327;
+  --border-strong: #303035;
+
+  /* Text */
+  --text: #fafafa;
+  --text-muted: #9a9aa0;
+  --text-soft: #e4e4e7;
+
+  /* Brand and interface accent */
+  --brand: #ce3c4a;          /* rouge belprod: logo dot, favicon */
+  --accent: #e8515f;         /* buttons, timecodes, active items */
+  --on-accent: #0a0a0b;      /* black text on accent buttons */
+  --accent-text: var(--accent); /* accent used as text; the organization's theme makes it readable (PHP) */
+
+  /* Version and comment statuses (never customised per client) */
+  --status-in-progress: #4d8dff;   /* En cours */
+  --status-to-review: #a970ff;     /* À valider */
+  --status-changes: #ffd60a;       /* Modifications demandées / À faire */
+  --status-approved: #2ee59d;      /* Validé / Fait */
+  --status-refused: #ff6b6b;       /* Révision refusée */
+
+  /* Client customisation (§5.8). The PHP shell overrides these three. */
+  --client-bg: var(--bg);
+  --client-text: var(--text);
+  --client-accent: var(--accent);
+  /* Text on accent buttons: black, or white on a dark client accent (PHP shell). */
+  --client-on-accent: var(--on-accent);
+  /* Accent used as text, readable on the client background (PHP shell). */
+  --client-accent-text: var(--accent-text);
+
+  /* Typography */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-logo: 'Poetsen One', var(--font-ui);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* Minimum touch target */
+  --hit: 44px;
+
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}

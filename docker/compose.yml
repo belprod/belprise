@@ -1,0 +1,20 @@
+# belprise with Docker (VPS, NAS): docker compose up -d, then open
+# http://<address>:8080/installation (the unlock code: see DEPLOIEMENT.md).
+# Put a reverse proxy with HTTPS in front (Caddy, Traefik, the NAS's own…).
+services:
+  belprise:
+    image: ghcr.io/belprod/belprise:3
+    ports:
+      - "8080:80"
+    volumes:
+      - belprise-data:/var/www/belprise/data
+    environment:
+      # E-mails (invitations, mots de passe oubliés) : le serveur SMTP de votre messagerie.
+      BELPRISE_SMTP_HOST: smtp.example.org
+      BELPRISE_SMTP_PORT: "587"
+      BELPRISE_SMTP_USER: no-reply@example.org
+      BELPRISE_SMTP_PASSWORD: change-me
+    restart: unless-stopped
+
+volumes:
+  belprise-data:

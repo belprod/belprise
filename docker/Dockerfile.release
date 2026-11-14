@@ -1,0 +1,37 @@
+# belprise — published image: Apache, PHP 8.3 and FFmpeg, with the code of a release.
+# Build context: an extracted release archive (belprise-x.y.z/), see scripts/build-image.sh.
+# Everything that must survive an update lives in the /var/www/belprise/data volume:
+# database, media, sessions and the configuration (BELPRISE_CONFIG).
+
+FROM php:8.3-apache
+
+# pdo_sqlite, mbstring, fileinfo and openssl ship with the official image.
+# FFmpeg: encoding of the playback versions on the server (optional, chosen in /superadmin).
+# msmtp: PHP's mail() hands the e-mails to the SMTP server of BELPRISE_SMTP_* (see entrypoint.sh).
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ffmpeg msmtp-mta ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && a2enmod rewrite headers \
+    && a2dissite 000-default \
+    && a2disconf other-vhosts-access-log
+
+COPY docker/apache/belprise.conf /etc/apache2/sites-available/belprise.conf
+COPY docker/apache/security.conf /etc/apache2/conf-available/zz-belprise-security.conf
+COPY docker/php/belprise.ini /usr/local/etc/php/conf.d/belprise.ini
+COPY docker/entrypoint.sh /usr/local/bin/belprise-entrypoint
+RUN a2ensite belprise && a2enconf zz-belprise-security && chmod 755 /usr/local/bin/belprise-entrypoint
+
+WORKDIR /var/www/belprise
+COPY VERSION ./
+COPY app/ app/
+COPY public/ public/
+RUN mkdir -p data && chown www-data:www-data data
+
+ENV BELPRISE_CONFIG=/var/www/belprise/data/config.php \
+    BELPRISE_FFMPEG=/usr/bin/ffmpeg \
+    BELPRISE_DOCKER=1
+VOLUME /var/www/belprise/data
+EXPOSE 80
+
+ENTRYPOINT ["belprise-entrypoint"]
+CMD ["apache2-foreground"]

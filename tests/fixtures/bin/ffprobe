@@ -1,0 +1,16 @@
+#!/bin/sh
+# Fake ffprobe for the tests.
+#   audio streams (csv): one, unless FAKE_AUDIO=0
+#   metadata (json): FAKE_PROBE_JSON, else an MXF in 1080p25, 250 frames, starting at 10:00:00:00
+for arg in "$@"; do
+    if [ "$arg" = "json" ]; then
+        if [ -n "$FAKE_PROBE_JSON" ]; then
+            printf '%s\n' "$FAKE_PROBE_JSON"
+        else
+            printf '%s\n' '{"streams":[{"codec_type":"video","codec_name":"dnxhd","width":1920,"height":1080,"r_frame_rate":"25/1","avg_frame_rate":"25/1","duration":"10.000000"},{"codec_type":"audio","codec_name":"pcm_s24le"}],"format":{"format_name":"mxf","duration":"10.000000","bit_rate":"120000000","tags":{"timecode":"10:00:00:00"}}}'
+        fi
+        exit 0
+    fi
+done
+[ "${FAKE_AUDIO:-1}" = "1" ] && echo "1"
+exit 0

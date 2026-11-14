@@ -1,0 +1,31 @@
+{
+  "name": "belprise",
+  "version": "3.0.0-dev",
+  "private": true,
+  "type": "module",
+  "description": "belprise — revue vidéo à l’image près, auto-hébergée (belprod)",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": "github:belprod/belprise",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build -c vite.site.config.ts",
+    "test": "vitest run",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "site": "vite -c vite.site.config.ts"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/node": "^26.6.6",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "hls.js": "1.7.3",
+    "mediabunny": "1.62.1",
+    "mp4box": "^2.5.0",
+    "uqr": "^0.1.3"
+  }
+}

@@ -1,0 +1,257 @@
+{
+  "_comment": "Demo data for development (scripts/dev/demo-data.sh). Every name is fictitious. Times are seconds into the video; daysAgo sets the dates.",
+  "clients": [
+    {
+      "name": "Maison Aurore",
+      "colors": ["#f3ede4", "#1c1915", "#a8481f"],
+      "welcome": "Bienvenue dans votre espace Belprise.\nRetrouvez ici les films de la collection printemps et du portrait de la maison.",
+      "logo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 250 48\"><circle cx=\"24\" cy=\"24\" r=\"15\" fill=\"none\" stroke=\"#a8481f\" stroke-width=\"3\"/><circle cx=\"24\" cy=\"24\" r=\"5\" fill=\"#a8481f\"/><text x=\"50\" y=\"32\" font-family=\"Georgia, serif\" font-size=\"25\" fill=\"#1c1915\">Maison Aurore</text></svg>",
+      "daysAgo": 40,
+      "projects": [
+        {
+          "name": "Collection printemps 2027",
+          "daysAgo": 12,
+          "videos": [
+            {
+              "title": "Film manifeste 60 s", "tags": ["pub", "manifeste"], "daysAgo": 12,
+              "versions": [
+                {
+                  "rate": "25", "tc": "10:00:00:00", "duration": 60, "source": "testsrc", "daysAgo": 9,
+                  "status": "changes_requested",
+                  "comments": [
+                    { "author": "Claire Martin", "at": 4.4, "text": "Le logo d’ouverture arrive un peu tôt, on peut le décaler d’une seconde ?", "status": "done", "daysAgo": 8,
+                      "replies": [{ "admin": true, "text": "C’est fait dans la V2, le logo arrive à 5 s." }] },
+                    { "author": "Thomas Roux", "at": 21, "out": 26.5, "text": "Sur cette séquence l’étalonnage est plus froid que le reste.", "status": "done", "daysAgo": 8 },
+                    { "author": "Claire Martin", "at": 52, "text": "Le packshot final est un peu court, garder 2 s de plus.", "status": "done", "daysAgo": 7 }
+                  ]
+                },
+                {
+                  "rate": "25", "tc": "10:00:00:00", "duration": 62, "source": "testsrc2", "daysAgo": 2,
+                  "status": "to_review",
+                  "comments": [
+                    { "author": "Claire Martin", "at": 33.2, "text": "Parfait pour l’étalonnage. Le sous-titre est-il assez lisible sur mobile ?", "status": "todo", "daysAgo": 0, "unread": true }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "Déclinaison 15 s", "tags": ["pub"], "daysAgo": 10,
+              "versions": [
+                { "rate": "25", "tc": "10:00:00:00", "duration": 15, "source": "smptehdbars", "daysAgo": 6, "status": "approved", "approvedBy": "Claire Martin", "approvedDaysAgo": 3 }
+              ]
+            },
+            {
+              "title": "Déclinaison 6 s réseaux sociaux", "tags": ["pub", "réseaux sociaux"], "daysAgo": 4,
+              "versions": [
+                { "rate": "25", "tc": "10:00:00:00", "duration": 6, "source": "gradients", "size": "1080x1920", "daysAgo": 1, "status": "in_progress" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Portrait de la maison",
+          "daysAgo": 30,
+          "videos": [
+            {
+              "title": "Interview de la fondatrice", "tags": ["corporate", "interview"], "daysAgo": 30,
+              "links": { "client": { "password": "aurore2027" } },
+              "versions": [
+                { "rate": "23.976", "tc": "01:00:00:00", "duration": 90, "source": "testsrc", "daysAgo": 22, "status": "approved", "approvedBy": "Hélène Dufresne", "approvedDaysAgo": 19,
+                  "comments": [
+                    { "author": "Hélène Dufresne", "at": 12, "out": 18, "text": "Ajouter le synthé avec le nom et la fonction.", "status": "done", "daysAgo": 21,
+                      "replies": [{ "admin": true, "text": "Ajouté : « Hélène Dufresne — fondatrice »." }, { "author": "Hélène Dufresne", "text": "Merci, c’est parfait." }] }
+                  ] }
+              ]
+            },
+            { "title": "Making-of à l’atelier", "tags": ["corporate", "making-of"], "daysAgo": 5, "versions": [] }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fondation Hélios",
+      "colors": ["#0e1a2b", "#e8eef5", "#f2b544"],
+      "welcome": "Espace de validation des films de la Fondation Hélios.",
+      "logo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 230 48\"><g fill=\"#f2b544\"><circle cx=\"24\" cy=\"24\" r=\"9\"/><rect x=\"22\" y=\"2\" width=\"4\" height=\"8\"/><rect x=\"22\" y=\"38\" width=\"4\" height=\"8\"/><rect x=\"2\" y=\"22\" width=\"8\" height=\"4\"/><rect x=\"38\" y=\"22\" width=\"8\" height=\"4\"/></g><text x=\"56\" y=\"32\" font-family=\"Helvetica, Arial, sans-serif\" font-weight=\"bold\" font-size=\"22\" letter-spacing=\"2\" fill=\"#e8eef5\">HÉLIOS</text></svg>",
+      "daysAgo": 60,
+      "projects": [
+        {
+          "name": "Rapport annuel 2026",
+          "daysAgo": 25,
+          "videos": [
+            {
+              "title": "Film rapport annuel", "tags": ["corporate", "motion design"], "daysAgo": 25,
+              "versions": [
+                { "rate": "25", "tc": "01:00:00:00", "duration": 75, "source": "testsrc2", "daysAgo": 15, "status": "changes_requested",
+                  "comments": [
+                    { "author": "Marc Lefèvre", "at": 8, "text": "Le titre doit être « Rapport d’activité », pas « Rapport annuel ».", "status": "done", "daysAgo": 14 },
+                    { "author": "Marc Lefèvre", "at": 40, "out": 47, "text": "Ce graphique est trop rapide, on n’a pas le temps de lire les chiffres.", "status": "done", "daysAgo": 14 }
+                  ] },
+                { "rate": "25", "tc": "01:00:00:00", "duration": 78, "source": "testsrc2", "daysAgo": 6, "status": "changes_requested",
+                  "comments": [
+                    { "author": "Sophie Garnier", "at": 63, "text": "Il manque le logo du partenaire à la fin.", "status": "done", "daysAgo": 5,
+                      "replies": [{ "admin": true, "text": "Corrigé dans la V3." }] }
+                  ] },
+                { "rate": "25", "tc": "01:00:00:00", "duration": 78, "source": "testsrc", "daysAgo": 1, "status": "to_review" }
+              ]
+            },
+            {
+              "title": "Chiffres clés — motion", "tags": ["motion design"], "daysAgo": 9,
+              "versions": [
+                { "rate": "50", "tc": "00:00:00:00", "duration": 30, "source": "mandelbrot", "daysAgo": 3, "status": "to_review",
+                  "comments": [
+                    { "author": "Sophie Garnier", "at": 11.3, "text": "Le chiffre 2 400 devrait être 2 450.", "status": "todo", "daysAgo": 1, "unread": true }
+                  ] }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Colloque Sciences & Société",
+          "daysAgo": 40,
+          "videos": [
+            {
+              "title": "Captation plénière", "tags": ["captation"], "daysAgo": 40,
+              "links": { "view": { "expiresOn": "2026-10-15" } },
+              "versions": [
+                { "rate": "29.97DF", "tc": "01:00:00;00", "duration": 90, "source": "life", "daysAgo": 35, "status": "approved", "approvedBy": "Marc Lefèvre", "approvedDaysAgo": 33 }
+              ]
+            },
+            {
+              "title": "Teaser colloque", "tags": ["teaser"], "daysAgo": 38,
+              "versions": [
+                { "rate": "25", "tc": "10:00:00:00", "duration": 20, "source": "smptehdbars", "daysAgo": 37, "status": "approved", "approvedBy": "Sophie Garnier", "approvedDaysAgo": 36 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Brasserie Ondine",
+      "colors": ["#1d2b22", "#f1ede2", "#e07a3f"],
+      "welcome": "Bonjour l’équipe Ondine ! Voici les films de l’ouverture de la terrasse.",
+      "logo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 220 48\"><path d=\"M4 30 Q14 18 24 30 T44 30\" fill=\"none\" stroke=\"#e07a3f\" stroke-width=\"4\" stroke-linecap=\"round\"/><text x=\"54\" y=\"33\" font-family=\"Georgia, serif\" font-style=\"italic\" font-size=\"26\" fill=\"#f1ede2\">Ondine</text></svg>",
+      "daysAgo": 8,
+      "projects": [
+        {
+          "name": "Ouverture de la terrasse",
+          "daysAgo": 5,
+          "videos": [
+            {
+              "title": "Teaser terrasse 20 s", "tags": ["pub", "réseaux sociaux"], "daysAgo": 5,
+              "versions": [
+                { "rate": "24", "tc": "00:00:00:00", "duration": 20, "source": "cellauto", "daysAgo": 2, "status": "changes_requested",
+                  "comments": [
+                    { "author": "Julien Caron", "at": 3, "text": "On peut mettre la musique un peu plus fort au début ?", "status": "todo", "daysAgo": 1, "unread": true },
+                    { "author": "Inès Caron", "at": 14.5, "out": 17, "text": "Superbe plan ! Peut-on retirer le panneau en arrière-plan ?", "status": "todo", "daysAgo": 0, "unread": true }
+                  ] }
+              ]
+            },
+            {
+              "title": "Portraits de l’équipe", "tags": ["interview"], "daysAgo": 3,
+              "versions": [
+                { "rate": "25", "tc": "01:00:00:00", "duration": 45, "source": "testsrc2", "daysAgo": 0, "status": "in_progress" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Groupe Verlaine Industries",
+      "colors": ["#ffffff", "#14202b", "#1f6feb"],
+      "welcome": "Films de formation et de marque du Groupe Verlaine.",
+      "logo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 260 48\"><rect x=\"4\" y=\"8\" width=\"32\" height=\"32\" rx=\"6\" fill=\"#1f6feb\"/><path d=\"M12 16 L20 32 L28 16\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"4\" stroke-linejoin=\"round\"/><text x=\"46\" y=\"32\" font-family=\"Helvetica, Arial, sans-serif\" font-size=\"21\" fill=\"#14202b\">Verlaine Industries</text></svg>",
+      "daysAgo": 30,
+      "projects": [
+        {
+          "name": "Sécurité sur site",
+          "daysAgo": 18,
+          "videos": [
+            {
+              "title": "Module 1 — Accueil", "tags": ["corporate", "formation"], "daysAgo": 18,
+              "versions": [
+                { "rate": "25", "tc": "00:00:00:00", "duration": 60, "source": "testsrc", "daysAgo": 14, "status": "approved", "approvedBy": "Paul Mercier", "approvedDaysAgo": 11 },
+                { "rate": "25", "tc": "00:00:00:00", "duration": 64, "source": "testsrc", "daysAgo": 1, "status": "to_review" }
+              ]
+            },
+            {
+              "title": "Module 2 — Équipements", "tags": ["corporate", "formation"], "daysAgo": 16,
+              "versions": [
+                { "rate": "25", "tc": "00:00:00:00", "duration": 60, "source": "smptehdbars", "daysAgo": 8, "status": "changes_requested",
+                  "comments": [
+                    { "author": "Paul Mercier", "at": 15, "text": "Le casque doit être blanc pour les visiteurs, pas jaune.", "status": "done", "daysAgo": 7 },
+                    { "author": "Nadia Benali", "at": 36, "out": 44, "text": "Ajouter le pictogramme « gants obligatoires ».", "status": "todo", "daysAgo": 6 }
+                  ] }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Film de marque 2027",
+          "daysAgo": 3,
+          "videos": [
+            {
+              "title": "Film de marque — version 4K", "tags": ["pub", "corporate"], "daysAgo": 3,
+              "versions": [
+                { "rate": "25", "tc": "10:00:00:00", "duration": 15, "source": "testsrc2", "size": "3840x2160", "daysAgo": 0, "status": "in_progress" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Festival Lumières d’automne",
+      "colors": ["#120d1f", "#f5f0ff", "#c38bff"],
+      "welcome": "Les films du festival, édition 2026.",
+      "logo": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 230 48\"><polygon points=\"20,4 26,18 40,18 29,27 33,42 20,33 7,42 11,27 0,18 14,18\" fill=\"#c38bff\"/><text x=\"50\" y=\"31\" font-family=\"Helvetica, Arial, sans-serif\" font-size=\"19\" letter-spacing=\"1\" fill=\"#f5f0ff\">LUMIÈRES D’AUTOMNE</text></svg>",
+      "daysAgo": 80,
+      "projects": [
+        {
+          "name": "Édition 2026",
+          "daysAgo": 50,
+          "archived": true,
+          "videos": [
+            {
+              "title": "Aftermovie", "tags": ["captation", "teaser"], "daysAgo": 50,
+              "versions": [
+                { "rate": "50", "tc": "00:00:00:00", "duration": 40, "source": "mandelbrot", "daysAgo": 45, "status": "approved", "approvedBy": "Léa Fontaine", "approvedDaysAgo": 44 }
+              ]
+            },
+            {
+              "title": "Concert d’ouverture", "tags": ["captation"], "daysAgo": 50,
+              "links": { "client": { "active": false } },
+              "versions": [
+                { "rate": "25", "tc": "20:30:00:00", "duration": 60, "source": "life", "daysAgo": 47, "status": "approved", "approvedBy": "Léa Fontaine", "approvedDaysAgo": 46 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Atelier Morel",
+      "colors": ["#fbf7f0", "#2b2118", "#8a5a2b"],
+      "welcome": "",
+      "logo": null,
+      "daysAgo": 120,
+      "archived": true,
+      "projects": [
+        {
+          "name": "Lancement boutique",
+          "daysAgo": 110,
+          "videos": [
+            {
+              "title": "Film boutique", "tags": ["pub"], "daysAgo": 110,
+              "versions": [
+                { "rate": "25", "tc": "10:00:00:00", "duration": 30, "source": "gradients", "daysAgo": 100, "status": "approved", "approvedBy": "Anne Morel", "approvedDaysAgo": 98 }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

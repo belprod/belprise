@@ -1,0 +1,9 @@
+TITLE: 1043 Captation V1
+FCM: DROP FRAME
+
+001  001      V     C        00:59:59;29 01:00:00;00 00:59:59;29 01:00:00;00  
+ |C:ResolveColorYellow |M:Inès : Coupe ici |D:1
+
+002  001      V     C        01:00:59;29 01:01:00;02 01:00:59;29 01:01:00;02  
+ |C:ResolveColorGreen |M:Inès : Plage qui franchit la minute |D:1
+
