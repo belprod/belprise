@@ -4,10 +4,7 @@ belprise keeps clients' unreleased videos: security reports are taken seriously 
 
 ## Reporting a vulnerability
 
-**Do not open a public issue.** Report privately, either:
-
-- with GitHub's **"Report a vulnerability"** button (Security tab of this repository), or
-- by e-mail to **contact@belprise.fr**, with "Sécurité" in the subject.
+**Do not open a public issue.** Report privately with GitHub's **"Report a vulnerability"** button, in the **Security** tab of this repository: only the maintainers see the report.
 
 Please include the affected version, the hosting type (shared hosting, Docker, Apache), the steps to reproduce and the impact you see. Do not include real link keys, tokens or client content; test on your own installation, never on someone else's.
 
