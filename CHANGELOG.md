@@ -2,6 +2,12 @@
 
 Les nouveautés de chaque version de belprise. Les numéros suivent [SemVer](https://semver.org/lang/fr/) : un changement du premier chiffre demande une réinstallation ou une opération manuelle, décrite ici.
 
+## 3.0.1 — 15 novembre 2026
+
+- **Encodage sur le serveur** : la tâche planifiée conseillée passe toutes les minutes (une fois par heure sans encodage sur le serveur) ; l'encodage démarre moins d'une minute après l'envoi. L'image Docker la lance désormais toutes les minutes. Sur un hébergement mutualisé, remplacez `*/5 * * * *` par `* * * * *` dans vos tâches Cron.
+- **Démo** : l'adresse de la démo mène directement à l'écran de connexion.
+- Site : mentions légales complétées.
+
 ## 3.0.0 — 15 novembre 2026
 
 Nouveau départ : belprise devient un logiciel **à code source disponible, que chacun installe sur son serveur** (licence PolyForm Shield 1.0.0). Une installation 2.x ne se met pas à jour en 3.0 : elle se réinstalle.

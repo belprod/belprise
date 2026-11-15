@@ -1,6 +1,6 @@
 {
   "name": "belprise",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "type": "module",
   "description": "belprise — revue vidéo à l’image près, auto-hébergée (belprod)",
