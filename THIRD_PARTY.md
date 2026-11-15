@@ -39,4 +39,4 @@ The image is based on the official `php:8.3-apache` image (Debian) and adds thes
 
 ## Development only (not distributed)
 
-PHPUnit (BSD-3-Clause), Vite, Vitest, svelte-check and TypeScript (MIT, Apache-2.0) are used to build and test belprise; they are not part of the archive nor of the image.
+PHPUnit (BSD-3-Clause), Vite, Vitest, svelte-check, TypeScript and marked (site pages from Markdown) (MIT, Apache-2.0) are used to build and test belprise; they are not part of the archive nor of the image.

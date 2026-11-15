@@ -79,7 +79,7 @@ Logiciel de revue vidéo de belprod (façon frame.io / Vimeo), **à code source 
 | Créer la configuration (une fois) | `docker compose exec app php app/bin/init-config.php` |
 | Installer PHPUnit (une fois) | `docker compose exec app composer install` |
 | Interface avec rechargement à chaud | `npm run dev` |
-| Compiler l'interface (application + site vitrine) | `npm run build` (adresse de l'application dans la vitrine : `VITE_APP_URL`, par défaut https://app.belprise.fr) |
+| Compiler l'interface (application + site vitrine) | `npm run build` (le site reprend `CHANGELOG.md` et `DEPLOIEMENT.md`, et produit `versions.json`) |
 | Site vitrine en local | http://localhost:8090 (servi par Apache après `npm run build`) ou `npm run site` (rechargement à chaud) |
 | Tests PHP | `docker compose exec app vendor/bin/phpunit` |
 | Tests front | `npm test` (Vitest) |

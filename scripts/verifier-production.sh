@@ -47,7 +47,7 @@ same() { # label, existing path, missing path
 }
 same 'fichier caché inaccessible' /.htaccess /.existe-pas-xyz
 same 'manifeste de build inaccessible' /assets/.vite/manifest.json /assets/.existe-pas/x.json
-expect 'formulaire de demande bêta' 200 "$APP/inscription"
+expect 'plus de demande d’accès bêta (3.0)' 404 "$APP/inscription"
 a="$(curl -s "$APP/abcdefghij")"; b="$(curl -s "$APP/zyxwvutsrq")"
 [ "$a" = "$b" ] && ok '404 neutre identique d’une clé à l’autre' || ko '404 différentes selon la clé'
 redirects 'HTTP redirigé vers HTTPS' "$APP/admin"
@@ -61,7 +61,8 @@ printf '%s' "$S" | grep -qi '^content-security-policy' && ok 'CSP de la vitrine'
 expect 'sitemap.xml' 200 "$SITE/sitemap.xml"
 curl -s "$SITE/robots.txt" | grep -q 'GPTBot' && ok 'robots.txt : robots d’IA refusés' || ko 'robots.txt de la vitrine'
 expect 'page inconnue : 404' 404 "$SITE/page-inconnue"
-curl -s "$SITE/" | grep -q "${APP#https://}/inscription" && ok "le bouton d'accès mène à $APP" || ko "les liens de la vitrine ne mènent pas à $APP (VITE_APP_URL)"
+for page in telecharger documentation versions; do expect "page $page" 200 "$SITE/$page/"; done
+curl -s "$SITE/versions.json" | grep -q '"version"' && ok 'versions.json (avis de nouvelle version)' || ko 'versions.json absent ou illisible'
 redirects 'HTTP redirigé vers HTTPS' "$SITE/"
 
 echo

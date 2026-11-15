@@ -372,9 +372,9 @@ La purge ne supprime jamais plus que le nécessaire, est journalisée, et dispos
 ### 5.15 Site vitrine du projet (belprise.fr)
 
 - **Accueil** : présentation de l'outil et de ses fonctions clés (revue à l'image près, révisions sur instant ou plage, export EDL, espace client aux couleurs du client, collections, versions de lecture HLS, auto-hébergement sans pistage), liens vers la **démo** (§5.16) et vers le **dépôt GitHub**.
-- **Versions** : liste des versions et de leurs nouveautés, générée à la compilation depuis `CHANGELOG.md`.
+- **Versions** : liste des versions et de leurs nouveautés, générée à la compilation depuis `CHANGELOG.md` (une version marquée « en préparation » n'est pas proposée au téléchargement ; seules les versions 3.x sont publiques).
 - **Téléchargements** : archive `.zip` de la dernière version avec son empreinte SHA-256, versions précédentes, commande pour l'image Docker.
-- **Documentation** : installation (mutualisé, Docker, Apache), mise à jour, questions fréquentes.
+- **Documentation** : le guide d'installation (`DEPLOIEMENT.md`, mutualisé, Docker, Apache, mise à jour), et des modèles de mentions légales et de politique de confidentialité pour les exploitants (`docs/modeles/`).
 - **`versions.json`** : la dernière version et son adresse de téléchargement, lus une fois par jour par les installations (§6).
 - **Mentions légales** et licence. Plus d'offre ni de demande d'accès (la bêta et la page `/inscription` disparaissent en 3.0).
 - Mêmes règles « aucun service tiers » que l'application (polices hébergées, pas de statistiques externes). Contrairement à l'application, la vitrine est **indexable**.

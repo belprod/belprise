@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://belprise.fr/</loc></url>
+  <url><loc>https://belprise.fr/telecharger/</loc></url>
+  <url><loc>https://belprise.fr/documentation/</loc></url>
+  <url><loc>https://belprise.fr/versions/</loc></url>
   <url><loc>https://belprise.fr/mentions-legales.html</loc></url>
-  <url><loc>https://belprise.fr/cgu.html</loc></url>
   <url><loc>https://belprise.fr/confidentialite.html</loc></url>
 </urlset>

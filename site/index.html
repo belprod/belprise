@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>belprise — la revue vidéo à l’image près, hébergée en France</title>
+    <title>belprise — la revue vidéo à l’image près, sur votre serveur</title>
     <meta
       name="description"
-      content="Partagez vos vidéos par simple lien, recueillez des révisions posées à l’image près, faites valider et livrez le master. Hébergé en France, sans pistage. Bêta gratuite : 100 Go offerts."
+      content="Partagez vos vidéos par simple lien, recueillez des révisions posées à l’image près, faites valider et livrez le master. Logiciel gratuit à installer sur votre serveur, sans pistage."
     />
     <meta name="referrer" content="no-referrer" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:title" content="belprise — la revue vidéo à l’image près" />
-    <meta property="og:description" content="Révisions au timecode exact, versions, validation et livraison du master. Hébergé en France, sans pistage." />
+    <meta property="og:description" content="Révisions au timecode exact, versions, validation et livraison du master. À installer chez vous, sans pistage." />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <link rel="canonical" href="https://belprise.fr/" />
@@ -22,22 +22,7 @@
     <link rel="stylesheet" href="/src/site.css" />
   </head>
   <body>
-    <a class="skip" href="#contenu">Aller au contenu</a>
-
-    <header class="header">
-      <div class="wrap header__inner">
-        <a class="wordmark" href="/" aria-label="belprise, accueil">belprise<span class="wordmark__dot">.</span></a>
-        <nav class="nav" aria-label="Sections">
-          <a href="#fonctionnalites">Fonctionnalités</a>
-          <a href="#beta">Bêta</a>
-          <a href="#questions">Questions</a>
-        </nav>
-        <div class="header__actions">
-          <a class="btn header__signin" href="%VITE_APP_URL%/admin">Connexion</a>
-          <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Accès bêta</a>
-        </div>
-      </div>
-    </header>
+<!--#header-->
 
     <main id="contenu">
       <section class="wrap hero" aria-labelledby="titre">
@@ -46,13 +31,13 @@
           <h1 class="display hero__title" id="titre">Vos clients révisent. <em>À l’image près.</em></h1>
           <p class="lead">
             Partagez une vidéo par simple lien, recueillez des révisions posées sur l’instant exact, faites valider la bonne
-            version et livrez le master. Sans compte pour vos clients, sans pistage, hébergé en France.
+            version et livrez le master. Sans compte pour vos clients, sans pistage, sur votre propre serveur.
           </p>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès bêta</a>
-            <a class="btn" href="#fonctionnalites">Voir les fonctionnalités</a>
+            <a class="btn btn--primary" href="/telecharger/">Télécharger belprise</a>
+            <a class="btn" href="https://demo.belprise.fr">Essayer la démo</a>
           </div>
-          <p class="hero__note muted">Bêta gratuite · 100 Go offerts · places limitées</p>
+          <p class="hero__note muted">Gratuit · à installer chez vous · code source ouvert à la lecture</p>
         </div>
 
         <figure class="mock" aria-label="Aperçu : une vidéo avec ses révisions placées sur la timeline, et le panneau des révisions.">
@@ -172,7 +157,7 @@
             <li class="feature">
               <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15V4"/><path d="m7 9 5-5 5 5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
               <h3 class="feature__title">Gros fichiers</h3>
-              <p>Des masters de plusieurs dizaines de Go, sans stress.</p>
+              <p>MP4, MOV, ProRes, MXF : des dizaines de Go, avec reprise.</p>
             </li>
             <li class="feature">
               <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
@@ -182,7 +167,7 @@
             <li class="feature">
               <span class="feature__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg></span>
               <h3 class="feature__title">Équipe</h3>
-              <p>Jusqu’à 10 personnes, chacune son rôle.</p>
+              <p>Un administrateur, des éditeurs, des lecteurs.</p>
             </li>
           </ul>
         </div>
@@ -195,7 +180,7 @@
             <h2 class="display section__title" id="titre-confidentialite">Vos images <em>restent les vôtres.</em></h2>
           </div>
           <ul class="trust__list">
-            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span><strong>Hébergé en France</strong></li>
+            <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></span><strong>Sur votre serveur</strong></li>
             <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a12 12 0 0 1-2.7 3.8M6.6 6.6C4.2 8 2.6 10.2 2 12c1 2.5 5 7 10 7 1.7 0 3.2-.5 4.5-1.2"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></span><strong>Aucun pistage</strong></li>
             <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><strong>Liens privés</strong></li>
             <li><span class="trust__icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span><strong>Espaces cloisonnés</strong></li>
@@ -203,35 +188,62 @@
         </div>
       </section>
 
-      <section class="section pricing" id="beta" aria-labelledby="titre-beta">
+      <section class="section pricing" id="installer" aria-labelledby="titre-installer">
         <div class="pricing__glow" aria-hidden="true"></div>
         <div class="wrap">
           <div class="section__head section__head--center">
-            <p class="eyebrow">// Bêta</p>
-            <h2 class="display section__title" id="titre-beta">Une seule offre, <em>et elle est gratuite.</em></h2>
-            <p class="lead">Belprise ouvre en bêta. Rejoignez les premiers studios à l’utiliser, et aidez-nous à le façonner.</p>
+            <p class="eyebrow">// Installer</p>
+            <h2 class="display section__title" id="titre-installer">Chez vous, <em>en quelques minutes.</em></h2>
+            <p class="lead">Un assistant dans le navigateur vérifie le serveur, crée votre compte et votre organisation. Les mises à jour se font en une commande.</p>
           </div>
 
-          <div class="plans">
-            <div class="plan plan--featured plan--beta">
-              <span class="plan__badge">Places limitées</span>
-              <p class="plan__name">Bêta-testeur</p>
-              <p class="plan__who">Studios, indépendants, agences</p>
-              <p class="plan__storage">100 Go de stockage</p>
-              <p class="plan__price"><span><span class="plan__amount">0 €</span><span class="plan__period">pendant toute la bêta · sans carte bancaire</span></span></p>
+          <div class="plans plans--three">
+            <div class="plan">
+              <p class="plan__name">Hébergement mutualisé</p>
+              <p class="plan__who">cPanel : o2switch, PlanetHoster, Infomaniak…</p>
               <ul class="plan__list">
-                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Toutes les fonctionnalités</li>
-                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> 10 utilisateurs, clients illimités</li>
-                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Hébergé en France, sans pistage</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> PHP 8.2 et SQLite, rien d’autre</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Déposer l’archive, ouvrir l’assistant</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Versions de lecture préparées dans le navigateur</li>
               </ul>
-              <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès</a>
+              <a class="btn" href="/documentation/#1-hébergement-mutualisé-cpanel">Le guide</a>
+            </div>
+            <div class="plan plan--featured">
+              <span class="plan__badge">Le plus complet</span>
+              <p class="plan__name">Docker</p>
+              <p class="plan__who">VPS, NAS Synology ou QNAP</p>
+              <ul class="plan__list">
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Une commande : docker compose up</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> FFmpeg inclus : ProRes et MXF préparés sur le serveur</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> E-mails par SMTP, tâches planifiées intégrées</li>
+              </ul>
+              <a class="btn btn--primary" href="/documentation/#2-docker-vps-nas">Le guide</a>
+            </div>
+            <div class="plan">
+              <p class="plan__name">Serveur Apache</p>
+              <p class="plan__who">Debian, Ubuntu…</p>
+              <ul class="plan__list">
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Apache 2.4 et PHP 8.2</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> FFmpeg facultatif</li>
+                <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg> Vos sauvegardes, vos règles</li>
+              </ul>
+              <a class="btn" href="/documentation/#3-serveur-apache-debian-ubuntu">Le guide</a>
             </div>
           </div>
+        </div>
+      </section>
 
-          <p class="pricing__note muted">
-            Chaque espace est ouvert à la main, au fil des demandes : nous gardons ainsi un service rapide pour tous, et mesurons
-            l’usage réel avant de dimensionner la suite.
-          </p>
+      <section class="section" id="licence" aria-labelledby="titre-licence">
+        <div class="wrap">
+          <div class="section__head section__head--center">
+            <p class="eyebrow">// Licence</p>
+            <h2 class="display section__title" id="titre-licence">Gratuit. <em>Pour de vrai.</em></h2>
+            <p class="lead">
+              belprise est publié sous licence <a href="%REPOSITORY%/blob/main/LICENSE" rel="noopener noreferrer">PolyForm Shield</a> :
+              installez-le, utilisez-le pour votre travail (même payé), modifiez-le, partagez-le. Une seule limite : ne pas le revendre,
+              ni en faire un service concurrent.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -248,31 +260,31 @@
             </details>
             <details>
               <summary>Quels fichiers puis-je envoyer ?</summary>
-              <p>Des MP4 en H.264, jusqu’en 4K. Le timecode du montage est conservé.</p>
+              <p>Des MP4 et MOV en H.264 ou HEVC, des ProRes et des MXF, jusqu’en 4K. Le timecode du montage est conservé, à l’image près.</p>
             </details>
             <details>
               <summary>Les révisions arrivent-elles dans mon logiciel de montage ?</summary>
-              <p>Oui, dans DaVinci Resolve, sous forme de marqueurs. Premiere Pro arrive bientôt.</p>
+              <p>Oui, dans DaVinci Resolve, sous forme de marqueurs EDL.</p>
             </details>
             <details>
-              <summary>Où sont hébergées mes vidéos ?</summary>
-              <p>En France, sans aucun service tiers.</p>
+              <summary>De quel serveur ai-je besoin ?</summary>
+              <p>Un hébergement mutualisé avec PHP 8.2 suffit. Avec Docker sur un VPS ou un NAS, le serveur prépare aussi les ProRes et les MXF.</p>
             </details>
             <details>
-              <summary>Combien coûte la bêta ?</summary>
-              <p>Rien. 100 Go offerts pendant toute la bêta, sans carte bancaire.</p>
+              <summary>Où sont mes vidéos ?</summary>
+              <p>Sur votre serveur, et nulle part ailleurs. belprise ne contacte aucun service tiers ; il vérifie seulement, une fois par jour et si vous le laissez faire, qu’une nouvelle version existe.</p>
             </details>
             <details>
-              <summary>Pourquoi des places limitées ?</summary>
-              <p>Nous ouvrons les espaces un par un pour garder un service rapide, et mesurer l’usage réel avant d’agrandir l’infrastructure.</p>
+              <summary>Combien ça coûte ?</summary>
+              <p>Rien. Vous payez seulement votre hébergement.</p>
             </details>
             <details>
-              <summary>Que se passe-t-il si mon stockage est plein ?</summary>
-              <p>Belprise vous prévient avant. Archivez les vidéos terminées ou supprimez celles dont vous n’avez plus besoin.</p>
+              <summary>Puis-je y accueillir plusieurs équipes ?</summary>
+              <p>Oui : chaque installation gère autant d’organisations que vous voulez, cloisonnées, chacune avec son quota et son identité visuelle.</p>
             </details>
             <details>
-              <summary>Et après la bêta ?</summary>
-              <p>Vous serez prévenu bien à l’avance. Vous pouvez partir à tout moment : vos masters restent téléchargeables.</p>
+              <summary>Comment signaler un problème ?</summary>
+              <p>Sur <a href="%REPOSITORY%/issues" rel="noopener noreferrer">GitHub</a>. Une faille de sécurité se signale en privé, avec le bouton « Report a vulnerability » du dépôt.</p>
             </details>
           </div>
         </div>
@@ -282,23 +294,13 @@
         <div class="wrap">
           <h2 class="display cta__title" id="titre-cta">Votre prochaine revue <em>commence ici.</em></h2>
           <div class="hero__actions">
-            <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Demander un accès bêta</a>
-            <a class="btn" href="%VITE_APP_URL%/admin">Se connecter</a>
+            <a class="btn btn--primary" href="/telecharger/">Télécharger belprise</a>
+            <a class="btn" href="https://demo.belprise.fr">Essayer la démo</a>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="wrap footer__inner">
-        <p class="signature"><span class="wordmark wordmark--small">belprise<span class="wordmark__dot">.</span></span> · propulsé par <a href="https://belprod.fr">belprod</a></p>
-        <nav aria-label="Informations">
-          <a href="/mentions-legales.html">Mentions légales</a>
-          <a href="/cgu.html">Conditions d’utilisation</a>
-          <a href="/confidentialite.html">Confidentialité</a>
-          <a href="mailto:contact@belprise.fr">Contact</a>
-        </nav>
-      </div>
-    </footer>
+<!--#footer-->
   </body>
 </html>

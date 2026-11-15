@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Télécharger — belprise</title>
+    <meta name="description" content="Télécharger la dernière version de belprise : archive pour hébergement mutualisé et Apache, image Docker." />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://belprise.fr/telecharger/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="../../frontend/src/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="../../frontend/src/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/src/site.css" />
+  </head>
+  <body>
+<!--#header-->
+
+    <main id="contenu" class="wrap page">
+      <p class="eyebrow">// Télécharger</p>
+      <h1 class="display">Télécharger belprise</h1>
+<!--#if-latest-->
+      <p class="lead">Version <strong>%LATEST_VERSION%</strong>, publiée le %LATEST_DATE%. Nouveautés : <a href="/versions/">toutes les versions</a>.</p>
+
+      <h2>Hébergement mutualisé ou serveur Apache</h2>
+      <p><a class="btn btn--primary" href="%DOWNLOAD_URL%" rel="noopener noreferrer">Archive belprise-%LATEST_VERSION%.zip</a></p>
+      <p>Puis suivez le <a href="/documentation/">guide d’installation</a>. Pour vérifier que l’archive est intacte, téléchargez aussi son empreinte (<code>.sha256</code>, sur la <a href="%RELEASES_URL%/tag/v%LATEST_VERSION%" rel="noopener noreferrer">page de la version</a>), puis :</p>
+      <pre><code>shasum -a 256 -c belprise-%LATEST_VERSION%.zip.sha256</code></pre>
+
+      <h2>Docker (VPS, NAS)</h2>
+      <p>L’image contient FFmpeg, l’envoi des e-mails par SMTP et la tâche planifiée. Avec le fichier <a href="%REPOSITORY%/blob/main/docker/compose.yml" rel="noopener noreferrer">compose.yml</a> :</p>
+      <pre><code>docker compose up -d</code></pre>
+      <p>Image : <code>ghcr.io/belprod/belprise:%LATEST_VERSION%</code> (ou <code>:3</code> pour suivre les mises à jour de la 3).</p>
+
+      <h2>Mettre à jour</h2>
+      <pre><code>php app/bin/update.php belprise-%LATEST_VERSION%.zip</code></pre>
+      <p>Avec Docker : <code>docker compose pull &amp;&amp; docker compose up -d</code>. Votre installation vous prévient elle-même des nouvelles versions, dans l’exploitation.</p>
+<!--#else-->
+      <p class="lead">La version 3.0.0, la première à installer soi-même, est en préparation.</p>
+      <p>Suivez son avancement sur <a href="%REPOSITORY%" rel="noopener noreferrer">GitHub</a> (bouton « Watch », puis « Releases ») ; en attendant, la <a href="https://demo.belprise.fr">démo</a> montre belprise en action.</p>
+<!--#end-->
+
+      <h2>Versions précédentes et code source</h2>
+      <p>Toutes les versions publiées, avec leurs archives et leurs empreintes : <a href="%RELEASES_URL%" rel="noopener noreferrer">pages des versions sur GitHub</a>. Licence : <a href="%REPOSITORY%/blob/main/LICENSE" rel="noopener noreferrer">PolyForm Shield 1.0.0</a>.</p>
+    </main>
+
+<!--#footer-->
+  </body>
+</html>

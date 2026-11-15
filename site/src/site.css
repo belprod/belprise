@@ -578,6 +578,153 @@ a {
   padding-left: 20px;
 }
 
+/* Long pages built from Markdown (documentation, versions) and the download page. */
+.page a:not(.btn) {
+  color: var(--accent-text, var(--accent));
+}
+
+.page h3 {
+  margin: 26px 0 8px;
+  font-size: 16.5px;
+  font-weight: 600;
+}
+
+.page ol {
+  padding-left: 22px;
+}
+
+.page li + li {
+  margin-top: 4px;
+}
+
+.page code {
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+}
+
+.page pre {
+  margin: 12px 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.page pre code {
+  padding: 0;
+  background: none;
+  font-size: 13px;
+  overflow-wrap: normal;
+  white-space: pre;
+}
+
+.page blockquote {
+  margin: 14px 0;
+  padding: 10px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface-1);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.page table {
+  display: block;
+  width: 100%;
+  margin: 14px 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.page th,
+.page td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  text-align: left;
+  vertical-align: top;
+}
+
+.page th {
+  background: var(--surface-1);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.page hr {
+  margin: 36px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.page .btn {
+  margin-top: 8px;
+}
+
+.prose h2 {
+  margin-top: 48px;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.prose p,
+.prose ul,
+.prose ol,
+.prose table,
+.prose blockquote {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin: 4px 0;
+}
+
+.toc ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.prose h2 + h3 {
+  margin-top: 12px;
+}
+
+.toc {
+  margin: 0 0 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.toc__title {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.toc ol {
+  margin: 8px 0 0;
+}
+
+.plans.plans--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .plans.plans--three {
+    grid-template-columns: minmax(0, 460px);
+  }
+}
+
 .todo {
   display: block;
   margin: 8px 0;

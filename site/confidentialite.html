@@ -3,79 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Politique de confidentialité — Belprise</title>
-    <meta name="description" content="Données personnelles traitées par Belprise et vos droits." />
+    <title>Confidentialité — belprise</title>
+    <meta name="description" content="Ce que le site belprise.fr sait de vous : presque rien." />
     <meta name="referrer" content="no-referrer" />
     <meta name="color-scheme" content="dark" />
+    <link rel="canonical" href="https://belprise.fr/confidentialite.html" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="../frontend/src/fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="../frontend/src/fonts/instrument-serif-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="../frontend/src/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/site.css" />
   </head>
   <body>
-    <a class="skip" href="#contenu">Aller au contenu</a>
-    <header class="header">
-      <div class="wrap header__inner">
-        <a class="wordmark" href="/" aria-label="belprise, accueil">belprise<span class="wordmark__dot">.</span></a>
-        <nav class="nav" aria-label="Sections">
-          <a href="/#fonctionnalites">Fonctionnalités</a>
-          <a href="/#tarifs">Tarifs</a>
-          <a href="/#questions">Questions</a>
-        </nav>
-        <div class="header__actions">
-          <a class="btn header__signin" href="%VITE_APP_URL%/admin">Connexion</a>
-          <a class="btn btn--primary" href="%VITE_APP_URL%/inscription">Essai gratuit</a>
-        </div>
-      </div>
-    </header>
+<!--#header-->
+
     <main id="contenu" class="wrap page">
-      <p class="eyebrow">// Données personnelles</p>
-      <h1 class="display">Politique de confidentialité</h1>
-      <span class="todo">Texte de travail, à faire relire avant la mise en ligne. Il décrit ce que le service enregistre réellement.</span>
+      <p class="eyebrow">// Informations</p>
+      <h1 class="display">Confidentialité</h1>
 
-      <h2>Ce qui est enregistré</h2>
-      <ul>
-        <li><strong>Demandes d’accès à la bêta</strong> : société, prénom, nom et adresse e-mail, transmis à belprod pour ouvrir l’espace ; conservés le temps de traiter la demande et de suivre la bêta.</li>
-        <li><strong>Utilisateurs des organisations</strong> : nom, adresse e-mail, mot de passe (sous forme d’empreinte, jamais en clair), secret de double authentification (chiffré), date de dernière connexion.</li>
-        <li><strong>Clients qui révisent une vidéo</strong> : le nom saisi et le texte des révisions. Aucun compte, aucune adresse e-mail.</li>
-        <li><strong>Adresses IP</strong> : jamais conservées en clair. Une empreinte salée sert uniquement à limiter les abus (tentatives de connexion, envois de révisions en masse).</li>
-      </ul>
+      <h2>Ce site</h2>
+      <p>belprise.fr ne dépose aucun cookie, n’utilise aucun outil de mesure d’audience et ne charge rien depuis un autre site : polices et images sont servies par belprise.fr lui-même.</p>
+      <p>Comme tout serveur web, celui de notre hébergeur note dans ses journaux l’adresse IP, la date et la page demandée. Ces journaux servent à la sécurité et au bon fonctionnement du site, ne sont pas exploités par belprod, et sont conservés selon les règles de l’hébergeur (12 mois au plus).</p>
 
-      <h2>Cookies et stockage local</h2>
-      <p>Belprise n’utilise aucun cookie de mesure d’audience ni de publicité. Seuls des éléments techniques sont utilisés :</p>
-      <ul>
-        <li>un cookie de session pour les utilisateurs connectés ;</li>
-        <li>un cookie qui retient l’accès à un lien protégé par mot de passe ;</li>
-        <li>dans le navigateur des clients, le nom saisi et un identifiant aléatoire qui permet de modifier ses propres révisions.</li>
-      </ul>
+      <h2>Les installations de belprise</h2>
+      <p>Une installation de belprise lit, une fois par jour au plus, le fichier <code>belprise.fr/versions.json</code> pour savoir si une nouvelle version existe. La requête ne contient rien d’autre que l’adresse IP du serveur qui la fait, notée comme les autres dans les journaux de l’hébergeur. L’exploitant d’une installation peut la désactiver.</p>
+      <p>belprod n’a aucun accès aux installations de belprise ni aux vidéos qu’elles contiennent : chacune appartient à celui qui l’a installée, responsable des données qu’il y accueille.</p>
 
-      <h2>Aucun service tiers</h2>
-      <p>Les pages de Belprise ne chargent rien depuis d’autres sites : ni statistiques, ni polices, ni bibliothèques externes. Les vidéos ne sont transmises à aucun tiers.</p>
-
-      <h2>Hébergement</h2>
-      <p>Les données sont hébergées en France, chez o2switch (Clermont-Ferrand). Comme tout hébergeur, o2switch tient des journaux techniques d’accès à ses serveurs, qui contiennent les adresses IP des visiteurs ; Belprise lui-même n’enregistre jamais d’adresse IP en clair.</p>
-      <span class="todo">À vérifier : durée de conservation des journaux d’accès chez o2switch.</span>
-      <span class="todo">À compléter : hébergeur (sous-traitant au sens du RGPD).</span>
-
-      <h2>Durées de conservation</h2>
-      <p>Les contenus d’une organisation sont conservés tant qu’elle existe, sous réserve de l’archivage automatique et du déclassement décrits dans les <a href="/cgu.html">conditions d’utilisation</a>. Après la suppression d’une organisation, ses données sont effacées.</p>
-      <span class="todo">À compléter : durée de conservation des sauvegardes.</span>
+      <h2>Liens vers GitHub</h2>
+      <p>Les téléchargements et le code source sont sur GitHub. En suivant ces liens, vous quittez belprise.fr : la <a href="https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener noreferrer">déclaration de confidentialité de GitHub</a> s’applique.</p>
 
       <h2>Vos droits</h2>
-      <p>Vous pouvez accéder à vos données, les rectifier, les effacer ou en demander la portabilité en écrivant à <a href="mailto:contact@belprise.fr">contact@belprise.fr</a>. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
-      <span class="todo">À compléter : responsable du traitement et, le cas échéant, contrat de sous-traitance proposé aux organisations.</span>
+      <p>Pour toute question sur vos données : <a href="mailto:contact@belprise.fr">contact@belprise.fr</a>. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
     </main>
-    <footer class="footer">
-      <div class="wrap footer__inner">
-        <p class="signature"><span class="wordmark wordmark--small">belprise<span class="wordmark__dot">.</span></span> · propulsé par <a href="https://belprod.fr">belprod</a></p>
-        <nav aria-label="Informations">
-          <a href="/mentions-legales.html">Mentions légales</a>
-          <a href="/cgu.html">Conditions d’utilisation</a>
-          <a href="/confidentialite.html">Confidentialité</a>
-          <a href="mailto:contact@belprise.fr">Contact</a>
-        </nav>
-      </div>
-    </footer>
+
+<!--#footer-->
   </body>
 </html>

@@ -1,6 +1,6 @@
 # belprise V3 — plan d'action
 
-> Statut : **décisions du 7 et du 14 novembre 2026**. P0 et P1 validées ; P2 validée ; P3 et P3b validées ; P4 préparée (15 novembre 2026) : premier envoi sur GitHub en attente de votre accord.
+> Statut : **décisions du 7 et du 14 novembre 2026**. P0 et P1 validées ; P2 validée ; P3 et P3b validées ; P4 validée (dépôt public github.com/belprod/belprise) ; P5 réalisée (15 novembre 2026), en attente de validation.
 > Point de départ : version 2.1.1 (commit `ec6249f`). Version visée : **3.0.0**.
 
 ## 1. Le changement en une phrase
