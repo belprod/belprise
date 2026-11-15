@@ -139,6 +139,13 @@ final class DemoModeTest extends AppTestCase
         self::assertSame('Studio renommé', $this->db()->query('SELECT name FROM organizations')->fetchColumn());
     }
 
+    public function testTheDemoAddressLeadsToTheSignInScreen(): void
+    {
+        $response = $this->request('GET', '/');
+        self::assertSame(303, $response->status);
+        self::assertSame('/admin', $response->headers()['Location'] ?? null);
+    }
+
     public function testTheOperatorPagesAreClosed(): void
     {
         foreach (['/superadmin', '/api/superadmin/session'] as $path) {

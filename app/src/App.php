@@ -122,6 +122,10 @@ final class App
             if (Demo::closed($request)) {
                 throw HttpException::notFound();
             }
+            // The demo's address on its own leads to the sign-in screen with the shared accounts.
+            if ($request->path === '/' && $request->isSafeMethod()) {
+                return Response::redirect('/admin');
+            }
             $refusal = Demo::refusal($request);
             if ($refusal !== null) {
                 throw new HttpException(403, $refusal, ['demo' => true]);

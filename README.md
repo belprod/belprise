@@ -2,7 +2,7 @@
 
 **Revue vidéo à l'image près, sur votre propre serveur.** Vous envoyez une vidéo à votre client par un simple lien ; il la regarde dans un lecteur à ses couleurs, pose ses révisions sur un instant ou une plage, valide la version, télécharge le master. Vous gardez toutes les versions d'une vidéo sur une seule page, et exportez les révisions en marqueurs pour DaVinci Resolve.
 
-- **Site** : [belprise.fr](https://belprise.fr) · **Démo** : demo.belprise.fr (bientôt)
+- **Site** : [belprise.fr](https://belprise.fr) · **Démo** : [demo.belprise.fr](https://demo.belprise.fr/admin)
 - **Installer** : [DEPLOIEMENT.md](DEPLOIEMENT.md) (hébergement mutualisé, Docker, serveur Apache)
 - **Licence** : [PolyForm Shield 1.0.0](LICENSE) — utilisation, modification et partage libres, y compris pour votre travail payé ; interdit de le revendre ou d'en faire un service concurrent.
 
