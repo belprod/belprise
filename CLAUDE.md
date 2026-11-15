@@ -94,6 +94,8 @@ Logiciel de revue vidéo de belprod (façon frame.io / Vimeo), **à code source 
 | Mot de passe oublié (sur le serveur, compte d'organisation ou d'exploitation) | `php app/bin/reset-password.php <e-mail>` |
 | Mettre à jour un serveur | `php app/bin/update.php belprise-x.y.z.zip` (`--check` : vérifie l'archive) |
 | Installer un serveur neuf | `https://<adresse>/installation` (code dans `data/installation-code.txt` ; Docker : `docker compose exec belprise cat /var/www/belprise/data/installation-code.txt`) |
+| Vidéos de la démo (sur le Mac, avec FFmpeg) | `scripts/demo-media.sh` → `dist/demo/extraits` |
+| Construire la démo (installation en mode démo, base vide) | `php app/bin/demo.php build` (`snapshot` : nouvel état de référence ; `reset` : remise à zéro immédiate ; guide : [docs/demo.md](docs/demo.md)) |
 | Vérifier une installation depuis l'extérieur | `scripts/verifier-production.sh https://app.belprise.fr https://belprise.fr` |
 
 Mettre ce tableau à jour si une commande change.

@@ -12,6 +12,8 @@ declare(strict_types=1);
 use Belprise\Config;
 use Belprise\Database\Database;
 use Belprise\DataDir;
+use Belprise\Demo\Demo;
+use Belprise\Demo\DemoSnapshot;
 use Belprise\Install\Environment;
 use Belprise\Lifecycle\Downgrade;
 use Belprise\Lifecycle\Notices;
@@ -43,6 +45,24 @@ $db = Database::open($config->dataDir . '/belprise.sqlite', dirname(__DIR__) . '
 $storage = new Storage($config->dataDir);
 $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
 $prefix = $dryRun ? '[essai] ' : '';
+
+// Public demo (§5.16): only the reset to the reference state, every 6 hours.
+if ($config->demo) {
+    $snapshot = new DemoSnapshot($config->dataDir, dirname(__DIR__) . '/migrations');
+    if (!$snapshot->exists()) {
+        echo "Démo : aucun instantané. Lancez « php app/bin/demo.php snapshot ».\n";
+    } elseif (!$snapshot->due($now->getTimestamp())) {
+        echo 'Démo : prochaine remise à zéro le ' . (new DateTimeImmutable('@' . Demo::nextReset($now->getTimestamp())))->setTimezone(new DateTimeZone(Demo::TIMEZONE))->format('d/m/Y à H:i') . ".\n";
+    } elseif ($dryRun) {
+        echo "{$prefix}Démo : remise à zéro due.\n";
+    } else {
+        $done = $snapshot->restore($db, $now->getTimestamp());
+        printf("Démo remise à zéro : %d ligne(s), %d fichier(s) recopié(s), %d supprimé(s).\n", $done['rows'], $done['copied'], $done['deleted']);
+    }
+    flock($lock, LOCK_UN);
+    fclose($lock);
+    exit(0);
+}
 
 // 1. Automatic archiving (6 months without a new version or revision).
 $archived = (new AutoArchiver($db, $storage))->run($now, $dryRun);

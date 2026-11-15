@@ -6,6 +6,8 @@
   import { fileSource } from '../media/source';
   import { listVersions } from '../media/versions';
   import type { PendingUpload, Version, Video } from '../types';
+  import { current } from '../current.svelte';
+  import { isDemo } from '../session';
   import { serverEncoding, uploads } from '../uploads.svelte';
   import JobProgress from './JobProgress.svelte';
   import MediaSummary from './MediaSummary.svelte';
@@ -27,6 +29,8 @@
   let playbackInfo = $state<MediaInfo | null>(null);
   let merged = $state<MediaInfo | null>(null);
 
+  // Public demo: no file can be sent (§5.16).
+  const demo = $derived(isDemo(current.session));
   const nextNumber = $derived((versions?.[0]?.number ?? 0) + 1);
   const jobs = $derived(uploads.jobs.filter((job) => job.videoId === video.id));
   const interrupted = $derived(pending.filter((p) => !jobs.some((job) => job.uploadId === p.id && job.state !== 'error')));
@@ -61,6 +65,7 @@
   function onDrop(event: DragEvent): void {
     event.preventDefault();
     dragging = false;
+    if (demo) return;
     const file = event.dataTransfer?.files?.[0];
     if (file) void analyse(file);
   }
@@ -124,7 +129,7 @@
   class:panel--drop={dragging}
   aria-labelledby="{uid}-title"
   ondragover={(e) => {
-    if (e.dataTransfer?.types.includes('Files')) {
+    if (!demo && e.dataTransfer?.types.includes('Files')) {
       e.preventDefault();
       dragging = true;
     }
@@ -139,6 +144,9 @@
     <span class="muted">{versions ? `${versions.length} version${versions.length > 1 ? 's' : ''}` : ''}</span>
   </div>
 
+  {#if demo}
+    <p class="panel__text">Dans la démo, l’envoi de nouvelles versions est désactivé : essayez la revue, les statuts et les liens sur les versions existantes.</p>
+  {:else}
   <div class="new can-edit">
     <label class="btn btn--primary btn--icon-plus file-button" class:file-button--busy={analysing}>
       Envoyer un master
@@ -151,6 +159,7 @@
       : 'Après l’envoi, la vidéo est optimisée pour la lecture dans ce navigateur : laissez la page ouverte jusqu’à la fin.'} La nouvelle version sera la V{nextNumber}, « En cours » (invisible pour le client) jusqu’à
     sa publication.
   </p>
+  {/if}
 
   {#if analysing}
     <p class="muted" role="status">Analyse de {chosen?.name}…</p>

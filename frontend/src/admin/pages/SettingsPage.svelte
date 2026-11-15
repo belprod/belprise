@@ -5,7 +5,7 @@
   import PageHead from '../components/PageHead.svelte';
   import RecoveryCodesList from '../components/RecoveryCodesList.svelte';
   import TotpSetup from '../components/TotpSetup.svelte';
-  import type { AdminSession, StorageUsage } from '../session';
+  import { ROLE_LABELS, type AdminSession, type StorageUsage } from '../session';
 
   let { session, onSession }: { session: AdminSession; onSession: (session: AdminSession) => void } = $props();
   let storage = $state<StorageUsage | null>(untrack(() => session.storage ?? null));
@@ -112,6 +112,18 @@
 <PageHead eyebrow="Réglages" title="Mon compte" />
 
 <div class="panels">
+  {#if session.demo}
+    <section class="panel" aria-labelledby="demo-title">
+      <h2 class="panel__title" id="demo-title">Compte de démonstration</h2>
+      <p class="panel__text">
+        {session.user?.name} — {session.user?.email}{session.user ? ` — ${ROLE_LABELS[session.user.role]}` : ''}.
+      </p>
+      <p class="panel__text">
+        Les comptes de la démo sont partagés : le profil, le mot de passe et la double authentification ne sont pas modifiables ici.
+        Sur votre propre installation, chacun gère son compte depuis cette page.
+      </p>
+    </section>
+  {:else}
   <form class="panel" onsubmit={saveProfile} novalidate aria-labelledby="profile-title">
     <h2 class="panel__title" id="profile-title">Profil</h2>
     <div class="form-grid">
@@ -209,6 +221,7 @@
       Téléphone perdu ? Connectez-vous avec un code de secours, ou demandez à l’administrateur de votre organisation de réinitialiser votre double authentification.
     </p>
   </section>
+  {/if}
 
   <section class="panel" aria-labelledby="storage-title">
     <h2 class="panel__title" id="storage-title">Stockage</h2>

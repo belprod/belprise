@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Belprise\Controller;
 
+use Belprise\Demo\Demo;
 use Belprise\Http\HttpException;
 use Belprise\Http\Request;
 use Belprise\Http\Response;
@@ -36,6 +37,8 @@ final class AdminController
         private readonly MediaSigner $signer,
         /** @var (\Closure(): string)|null where the playback versions are encoded (§5.7 bis) */
         private readonly ?\Closure $encodingMode = null,
+        /** Public demo (§5.16): the sign-in screen shows the accounts, the banner the next reset. */
+        private readonly bool $demo = false,
     ) {
     }
 
@@ -200,6 +203,7 @@ final class AdminController
             // The organization asks for two-factor authentication: set it up before anything else (§5.7).
             'totpSetupRequired' => $this->auth->totpSetupRequired(),
             'recoveryCodesLeft' => $this->auth->recoveryCodesLeft(),
+            'demo' => $this->demo ? Demo::state(time()) : null,
             'csrf' => $this->csrf->token(),
         ];
     }

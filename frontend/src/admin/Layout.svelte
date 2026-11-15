@@ -18,6 +18,7 @@
   import VideoPage from './pages/VideoPage.svelte';
   import VideosList from './pages/VideosList.svelte';
   import { ADMIN_BASE, SECTIONS, parseAdminRoute, type AdminRoute } from './sections';
+  import { untilReset } from './demo';
   import { can, logout, ROLE_LABELS, type AdminSession } from './session';
 
   let {
@@ -33,6 +34,14 @@
   const routeKey = $derived(location.path + location.search);
   const pageId = $derived(route.view === 'detail' ? route.id : null);
   let busy = $state(false);
+
+  // Public demo: the time left before the reset (§5.16).
+  let now = $state(Date.now());
+  onMount(() => {
+    if (!session.demo) return;
+    const timer = setInterval(() => (now = Date.now()), 30_000);
+    return () => clearInterval(timer);
+  });
 
   // Badge: refreshed every minute and on each page change (a review marks comments as read).
   onMount(() => {
@@ -88,7 +97,7 @@
       {/each}
     </ul>
     <div class="nav__bottom">
-      <UploadCard />
+      {#if !session.demo}<UploadCard />{/if}
       <div class="nav__account">
         <p class="eyebrow">// Connecté</p>
         <p class="nav__user">{session.user?.name}</p>
@@ -104,6 +113,13 @@
 
   <main class="main">
     <div class="main__inner">
+    {#if session.demo}
+      <p class="demo-banner" role="status">
+        <strong>Démo — remise à zéro dans {untilReset(session.demo.resetAt, now)}.</strong>
+        Essayez tout : révisions, statuts, liens, collections. Seul l’envoi de fichiers est désactivé.
+        <span class="demo-banner__credit">{session.demo.credit}</span>
+      </p>
+    {/if}
     {#if session.lifecycle?.deletionAt}
       <p class="quota-banner quota-banner--full" role="status">
         <strong>Suppression de l’organisation programmée le {formatLongDate(session.lifecycle.deletionAt)}.</strong>
@@ -305,6 +321,23 @@
     border-radius: var(--radius-md);
     background: color-mix(in srgb, var(--status-changes) 10%, transparent);
     font-size: 13.5px;
+  }
+
+  .demo-banner {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  .demo-banner__credit {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-size: 12px;
   }
 
   .quota-banner--full {

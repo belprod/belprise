@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { isDemo } from '../session';
   import { api, ApiError, upload } from '../../lib/api';
   import { AA_TEXT, contrastRatio, formatRatio } from '../../lib/contrast';
   import { plural } from '../../lib/format';
@@ -298,6 +299,9 @@
           <p class="panel__text">SVG, PNG ou WebP, 2 Mo au plus. Il remplace la marque Belprise sur la page de la collection.</p>
           {#if logoError}<p class="form-error" role="alert">{logoError}</p>{/if}
           <div class="form-actions can-edit">
+            {#if isDemo(current.session)}
+              <span class="muted">Dans la démo, l’envoi de logo est désactivé.</span>
+            {:else}
             <label class="btn btn--small file-button" class:file-button--busy={logoBusy}>
               {collection.logoUrl ? 'Remplacer' : 'Choisir un fichier'}
               <input
@@ -308,6 +312,7 @@
                 onchange={uploadLogo}
               />
             </label>
+            {/if}
             {#if collection.logoUrl}
               <button class="btn btn--small" type="button" disabled={logoBusy} onclick={removeLogo}>Retirer</button>
             {/if}

@@ -10,6 +10,7 @@ Nouveau départ : belprise devient un logiciel **à code source disponible, que 
 - **Versions de lecture préparées au choix dans le navigateur ou sur le serveur** (FFmpeg, en arrière-plan, une vidéo à la fois, en priorité basse). Sur le serveur, les masters ProRes et MXF s'envoient sans fichier joint : le serveur lit leurs informations, prépare la version de lecture et fait les miniatures.
 - **Organisations** : un seul administrateur par organisation, qui peut transférer son rôle ; quota libre fixé par le super-administrateur (en Go, ou sans limite) ; plus de forfaits ni de limite d'utilisateurs.
 - **Comptes** : « Mot de passe oublié ? » sur l'écran de connexion ; dix codes de secours pour la double authentification ; double authentification obligatoire au choix de chaque organisation.
+- **Mode démo** (`'demo' => true`) : comptes partagés affichés sur l'écran de connexion, aucun envoi de fichier ni d'e-mail, remise à zéro toutes les 6 heures ; c'est la démo publique demo.belprise.fr.
 - **Avis de nouvelle version** dans `/superadmin` : le serveur consulte belprise.fr une fois par jour (désactivable).
 - **Correctif** : un vrai fichier ProRes `.mov` n'était pas reconnu dans le navigateur.
 - Retrait de la bêta (offre de 100 Go et demande d'accès).

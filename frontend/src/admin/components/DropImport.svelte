@@ -5,6 +5,8 @@
   import type { Project, Video } from '../types';
   import { serverEncoding, uploads } from '../uploads.svelte';
   import Combobox from './Combobox.svelte';
+  import { current } from '../current.svelte';
+  import { isDemo } from '../session';
 
   /**
    * Several masters at once (§5.7): each file is analysed, creates its video
@@ -64,6 +66,7 @@
   }
 </script>
 
+{#if !isDemo(current.session)}
 <div
   class="drop can-edit"
   class:drop--over={dragging}
@@ -108,6 +111,7 @@
     </ul>
   {/if}
 </div>
+{/if}
 
 <style>
   .drop {

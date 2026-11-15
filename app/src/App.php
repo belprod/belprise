@@ -19,6 +19,7 @@ use Belprise\Controller\ClientReviewController;
 use Belprise\Controller\MediaController;
 use Belprise\Controller\PublicController;
 use Belprise\Controller\SuperAdminController;
+use Belprise\Demo\Demo;
 use Belprise\Http\HttpException;
 use Belprise\Http\NativeSession;
 use Belprise\Http\Request;
@@ -117,6 +118,15 @@ final class App
 
     private function dispatch(Request $request, string $nonce): Response
     {
+        if ($this->config->demo) {
+            if (Demo::closed($request)) {
+                throw HttpException::notFound();
+            }
+            $refusal = Demo::refusal($request);
+            if ($refusal !== null) {
+                throw new HttpException(403, $refusal, ['demo' => true]);
+            }
+        }
         $match = $this->router($request, $nonce)->match($request) ?? throw HttpException::notFound();
         [$handler, $params] = $match;
 
@@ -190,7 +200,7 @@ final class App
         $r = new Router();
 
         // Admin pages and session
-        $admin = fn () => new AdminController($s->auth(), $s->csrf(), $s->shell(), $s->clientKey($ip), $s->organizations(), $s->quota(), $s->signer(), $s->encodingMode(...));
+        $admin = fn () => new AdminController($s->auth(), $s->csrf(), $s->shell(), $s->clientKey($ip), $s->organizations(), $s->quota(), $s->signer(), $s->encodingMode(...), $this->config->demo);
         $r->get(AdminController::shellPattern(), fn (Request $q) => $admin()->shell($q, $nonce));
         $r->get('#^/api/admin/session$#', fn () => $admin()->session());
         $r->post('#^/api/admin/setup$#', fn (Request $q) => $admin()->setup($q));

@@ -24,6 +24,8 @@ final class Config
         public readonly ?string $ffmpeg = null,
         /** Daily check of https://belprise.fr/versions.json by the scheduled task (D8); false: never. */
         public readonly bool $updateCheck = true,
+        /** Public demo (§5.16): shared accounts, no file sent, no e-mail, reset every 6 hours. */
+        public readonly bool $demo = false,
     ) {
     }
 
@@ -82,6 +84,7 @@ final class Config
             self::appUrl($values['app_url'] ?? null),
             is_string($values['ffmpeg'] ?? null) && $values['ffmpeg'] !== '' ? $values['ffmpeg'] : null,
             (bool) ($values['update_check'] ?? true),
+            ($values['demo'] ?? false) === true,
         );
     }
 

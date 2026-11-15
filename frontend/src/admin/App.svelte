@@ -25,6 +25,8 @@
   const superadmin = boot.page === 'superadmin' ? boot.session : null;
 
   let session = $state(boot.page === 'admin' ? boot.session : SIGNED_OUT);
+  // Known before the first page is built (a page opened directly reads it at once).
+  current.session = boot.page === 'admin' ? boot.session : null;
   $effect(() => {
     current.session = session;
   });
@@ -35,7 +37,7 @@
 
   // Expired session: back to the login screen, on the same page.
   setUnauthorizedHandler(() => {
-    session = { ...SIGNED_OUT, csrf: session.csrf };
+    session = { ...SIGNED_OUT, csrf: session.csrf, demo: session.demo };
   });
 
   function update(next: AdminSession): void {
@@ -56,7 +58,7 @@
   <Setup onDone={update} />
 {:else if !session.authenticated}
   {#key session.totpRequired}
-    <Login onDone={update} codeStep={session.totpRequired === true} />
+    <Login onDone={update} codeStep={session.totpRequired === true} demo={session.demo ?? null} />
   {/key}
 {:else if session.totpSetupRequired}
   <TotpRequired {session} onDone={update} />

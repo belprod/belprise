@@ -6,7 +6,7 @@
   import ConfirmDialog from '../components/ConfirmDialog.svelte';
   import PageHead from '../components/PageHead.svelte';
   import { current } from '../current.svelte';
-  import { ROLE_LABELS, type Role, type SessionOrganization } from '../session';
+  import { ROLE_LABELS, type Role, type SessionOrganization, isDemo } from '../session';
 
   interface Member {
     id: number;
@@ -312,6 +312,9 @@
       orgBusy = false;
     }
   }
+
+  // Public demo: the shared accounts and the organization stay as they are (§5.16).
+  const demo = $derived(isDemo(current.session));
 </script>
 
 <PageHead eyebrow="Organisation" title="Équipe" />
@@ -338,6 +341,8 @@
                 <td>
                   {#if member.role === 'admin'}
                     <strong>{ROLE_LABELS.admin}</strong>
+                  {:else if demo}
+                    {ROLE_LABELS[member.role]}
                   {:else}
                     <label class="visually-hidden" for="role-{member.id}">Rôle de {member.name}</label>
                     <select class="select" id="role-{member.id}" value={member.role} onchange={(e) => setRole(member, e.currentTarget.value as Role)}>
@@ -347,11 +352,11 @@
                 </td>
                 <td class="muted">{member.lastLoginAt ? formatDate(member.lastLoginAt) : 'jamais'}</td>
                 <td class="table__actions">
-                  {#if !member.me}
+                  {#if !member.me && !demo}
                     <button class="btn btn--small" type="button" onclick={() => askReset(member, 'password')}>Mot de passe…</button>
                     {#if member.totp}<button class="btn btn--small" type="button" onclick={() => askReset(member, 'totp')}>Double auth…</button>{/if}
                   {/if}
-                  {#if member.role !== 'admin'}
+                  {#if member.role !== 'admin' && !demo}
                     <button class="btn btn--small" type="button" onclick={() => ((removing = member), (confirmRemove = true))}>Retirer…</button>
                   {/if}
                 </td>
@@ -377,6 +382,15 @@
     {/if}
   </section>
 
+  {#if demo}
+    <section class="panel" aria-labelledby="demo-team-title">
+      <h2 class="panel__title" id="demo-team-title">Équipe de démonstration</h2>
+      <p class="panel__text">
+        Dans la démo, l’équipe est fixe : pas d’invitation, de changement de rôle, de transfert du rôle d’administrateur ni de double
+        authentification obligatoire. Sur votre installation, l’administrateur gère tout cela depuis cette page.
+      </p>
+    </section>
+  {:else}
   <form class="panel" onsubmit={invite} novalidate aria-labelledby="invite-title">
     <h2 class="panel__title" id="invite-title">Inviter quelqu’un</h2>
     <p class="panel__text">La personne reçoit un e-mail avec un lien, valable 7 jours, pour créer son compte. Vous restez le seul administrateur.</p>
@@ -447,6 +461,7 @@
     </label>
     {#if securityError}<p class="form-error" role="alert">{securityError}</p>{/if}
   </section>
+  {/if}
 
   <form class="panel" onsubmit={renameOrganization} novalidate aria-labelledby="org-title">
     <h2 class="panel__title" id="org-title">Organisation</h2>
@@ -479,10 +494,14 @@
       <p class="field__hint">SVG, PNG ou WebP, 2 Mo au plus. Affiché en haut du menu.</p>
       {#if logoError}<p class="form-error" role="alert">{logoError}</p>{/if}
       <div class="form-actions">
+        {#if isDemo(current.session)}
+          <span class="muted">Dans la démo, l’envoi de logo est désactivé.</span>
+        {:else}
         <label class="btn btn--small file-button" class:file-button--busy={logoBusy}>
           {current.session?.organization?.logoUrl ? 'Remplacer' : 'Choisir un fichier'}
           <input class="visually-hidden" type="file" accept=".svg,.png,.webp,image/svg+xml,image/png,image/webp" disabled={logoBusy} onchange={uploadLogo} />
         </label>
+        {/if}
         {#if current.session?.organization?.logoUrl}
           <button class="btn btn--small" type="button" disabled={logoBusy} onclick={removeLogo}>Retirer</button>
         {/if}
@@ -519,6 +538,7 @@
   </div>
 </section>
 
+{#if !demo}
 <section class="panel danger" aria-labelledby="delete-org-title">
   <h2 class="panel__title" id="delete-org-title">Supprimer l’organisation</h2>
   {#if lifecycle?.deletionAt}
@@ -561,6 +581,7 @@
     </form>
   {/if}
 </section>
+{/if}
 
 {#if journal.length > 0}
   <section class="panel journal" aria-labelledby="journal-title">

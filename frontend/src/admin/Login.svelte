@@ -2,9 +2,21 @@
   import { onMount, tick } from 'svelte';
   import { api, ApiError } from '../lib/api';
   import AuthScreen from './AuthScreen.svelte';
-  import { login, loginCode, SIGNED_OUT, type AdminSession } from './session';
+  import { untilReset, type DemoAccount, type DemoState } from './demo';
+  import { login, loginCode, ROLE_LABELS, SIGNED_OUT, type AdminSession } from './session';
 
-  let { onDone, codeStep = false }: { onDone: (session: AdminSession) => void; codeStep?: boolean } = $props();
+  let {
+    onDone,
+    codeStep = false,
+    demo = null,
+  }: { onDone: (session: AdminSession) => void; codeStep?: boolean; demo?: DemoState | null } = $props();
+
+  /** Public demo: one click per shared account (§5.16). */
+  function enterAs(account: DemoAccount, event: MouseEvent): void {
+    email = account.email;
+    password = account.password;
+    void submit(event);
+  }
 
   let email = $state('');
   let password = $state('');
@@ -38,7 +50,7 @@
 
   onMount(() => (codeStep ? codeInput : emailInput)?.focus());
 
-  async function submit(event: SubmitEvent): Promise<void> {
+  async function submit(event: Event): Promise<void> {
     event.preventDefault();
     if (busy) return;
     busy = true;
@@ -110,7 +122,26 @@
     </form>
   </AuthScreen>
 {:else}
-  <AuthScreen eyebrow="Administration" title={forgotMode ? 'Mot de passe oublié' : 'Connexion'}>
+  <AuthScreen eyebrow={demo ? 'Démo publique' : 'Administration'} title={forgotMode ? 'Mot de passe oublié' : 'Connexion'}>
+    {#if demo}
+      <section class="demo" aria-labelledby="demo-title">
+        <h2 id="demo-title" class="demo__title">Entrez avec un compte de démonstration</h2>
+        <div class="demo__accounts">
+          {#each demo.accounts as account (account.email)}
+            <button class="btn demo__account" type="button" disabled={busy} onclick={(e) => enterAs(account, e)}>
+              <span class="demo__role">{ROLE_LABELS[account.role]}</span>
+              <span class="demo__email">{account.email}</span>
+            </button>
+          {/each}
+        </div>
+        <p class="demo__note">
+          Mot de passe des trois comptes : <code>{demo.accounts[0]?.password}</code>.
+          Tout est remis à zéro toutes les 6 heures (prochaine fois dans {untilReset(demo.resetAt)}).
+          L’envoi de fichiers et l’envoi d’e-mails sont désactivés.
+        </p>
+        <p class="demo__credit">{demo.credit}</p>
+      </section>
+    {/if}
     {#if forgotMode}
       {#if forgotSent}
         <p class="sent" role="status">
@@ -167,15 +198,72 @@
       <button class="btn btn--primary btn--block" type="submit" disabled={busy}>
         {busy ? 'Connexion…' : 'Se connecter'}
       </button>
-      <p class="forgot">
-        <button class="link" type="button" onclick={() => ((forgotMode = true), (error = ''))}>Mot de passe oublié ?</button>
-      </p>
+      {#if !demo}
+        <p class="forgot">
+          <button class="link" type="button" onclick={() => ((forgotMode = true), (error = ''))}>Mot de passe oublié ?</button>
+        </p>
+      {/if}
     </form>
     {/if}
   </AuthScreen>
 {/if}
 
 <style>
+  .demo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo__title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .demo__accounts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .demo__account {
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .demo__role {
+    font-weight: 600;
+  }
+
+  .demo__email {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .demo__note,
+  .demo__credit {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .demo__credit {
+    font-size: 12px;
+  }
+
+  .demo__note code {
+    color: var(--text);
+    font-family: var(--font-mono);
+  }
+
   .link {
     padding: 0;
     border: none;

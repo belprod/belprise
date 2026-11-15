@@ -1,4 +1,5 @@
 import { api } from '../lib/api';
+import type { DemoState } from './demo';
 
 export type Role = 'admin' | 'editor' | 'viewer';
 
@@ -62,6 +63,8 @@ export interface AdminSession {
   recoveryCodesLeft?: number;
   /** Where the playback versions are encoded (§5.7 bis) */
   encoding?: 'browser' | 'server' | null;
+  /** Public demo: shared accounts, next reset, credit of the films (§5.16) */
+  demo?: DemoState | null;
   csrf: string;
 }
 
@@ -103,4 +106,9 @@ export function logout(): Promise<AdminSession> {
 
 export function loginCode(code: string): Promise<AdminSession> {
   return api<AdminSession>('POST', '/api/admin/login/totp', { code });
+}
+
+/** Public demo (§5.16): no file can be sent, the shared accounts cannot be changed. */
+export function isDemo(session: AdminSession | null | undefined): boolean {
+  return session?.demo != null;
 }

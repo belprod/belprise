@@ -12,6 +12,7 @@ use Belprise\Lifecycle\Notices;
 use Belprise\Lifecycle\OrganizationDeletion;
 use Belprise\Mail\Mailer;
 use Belprise\Mail\NativeMailer;
+use Belprise\Mail\NullMailer;
 use Belprise\Repository\Clients;
 use Belprise\Repository\Collections;
 use Belprise\Repository\AccountResets;
@@ -135,6 +136,11 @@ final class Services
 
     public function mailer(): Mailer
     {
+        // The demo sends nothing, whatever the call (§5.16).
+        if ($this->config->demo) {
+            return new NullMailer();
+        }
+
         return $this->once(Mailer::class, fn () => new NativeMailer($this->config->mailFrom));
     }
 

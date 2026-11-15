@@ -11,6 +11,8 @@
   import { serverEncoding, uploads } from '../uploads.svelte';
   import MetadataDialog from './MetadataDialog.svelte';
   import PosterDialog from './PosterDialog.svelte';
+  import { current } from '../current.svelte';
+  import { isDemo } from '../session';
 
   let {
     version,
@@ -18,6 +20,9 @@
     onChange,
     onDeleted,
   }: { version: Version; video: Video; onChange: (version: Version) => void; onDeleted: () => void } = $props();
+
+  // Public demo: no image nor playback file can be sent (§5.16).
+  const demo = $derived(isDemo(current.session));
 
   // Playback versions (§5.7 bis): encoded in this browser.
   const playbackBusy = $derived(
@@ -147,7 +152,7 @@
         <span class="pill">Optimisation en cours…</span>
       {:else}
         <span class="pill pill--warn">Sans version de lecture</span>
-        <span class="can-edit">
+        {#if !demo}<span class="can-edit">
           {#if version.playable || serverEncoding()}
             <button class="btn btn--small" type="button" onclick={generatePlayback}>Générer la version de lecture</button>
           {:else}
@@ -156,7 +161,7 @@
               <input class="visually-hidden" type="file" accept=".mp4,.mov,video/mp4,video/quicktime" onchange={playbackFromFile} />
             </label>
           {/if}
-        </span>
+        </span>{/if}
       {/if}
     </p>
     {#if playbackError}<p class="form-error" role="alert">{playbackError}</p>{/if}
@@ -189,7 +194,7 @@
       </select>
       <button class="btn btn--small" type="button" onclick={() => (editMeta = true)}>Métadonnées…</button>
       <!-- Drawn from the master in this browser: not for ProRes / MXF, whose images come from the server or the joined file. -->
-      {#if version.playable}
+      {#if version.playable && !demo}
         <button class="btn btn--small" type="button" onclick={() => (editPoster = true)}>Couverture…</button>
         <button class="btn btn--small" type="button" disabled={imagesProgress !== null} onclick={regenerateImages}>
           {version.spriteUrl ? 'Régénérer les miniatures' : 'Générer les miniatures'}
