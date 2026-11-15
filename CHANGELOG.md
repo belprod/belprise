@@ -2,7 +2,7 @@
 
 Les nouveautés de chaque version de belprise. Les numéros suivent [SemVer](https://semver.org/lang/fr/) : un changement du premier chiffre demande une réinstallation ou une opération manuelle, décrite ici.
 
-## 3.0.0 — en préparation
+## 3.0.0 — 15 novembre 2026
 
 Nouveau départ : belprise devient un logiciel **à code source disponible, que chacun installe sur son serveur** (licence PolyForm Shield 1.0.0). Une installation 2.x ne se met pas à jour en 3.0 : elle se réinstalle.
 
