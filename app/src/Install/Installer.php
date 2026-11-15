@@ -490,9 +490,9 @@ HTML, 200, 7);
         $server = ($state['encoding'] ?? 'browser') === 'server';
         $cron = self::e(self::cronLine($this->rootDir, $server));
         $task = getenv('BELPRISE_DOCKER') === '1'
-            ? '<li><strong>La tâche planifiée</strong> (archivage, rappels, purges…) tourne déjà dans le conteneur, toutes les 5 minutes : rien à faire.</li>'
+            ? '<li><strong>La tâche planifiée</strong> (archivage, rappels, purges…) tourne déjà dans le conteneur, toutes les minutes : rien à faire.</li>'
             : '<li><strong>La tâche planifiée</strong> (archivage, rappels, purges' . ($server ? ', encodage des versions de lecture' : '') . '), '
-                . ($server ? 'toutes les 5 minutes' : 'une fois par heure') . '. Dans cPanel : « Tâches Cron », puis cette commande :<p class="key small">' . $cron . '</p></li>';
+                . ($server ? 'toutes les minutes' : 'une fois par heure') . '. Dans cPanel : « Tâches Cron », puis cette commande :<p class="key small">' . $cron . '</p></li>';
 
         return $this->page('Installation terminée', <<<HTML
 <p>belprise est installé.</p>
@@ -507,10 +507,10 @@ HTML, 200, 7);
 HTML);
     }
 
-    /** The line for the host's scheduled tasks: hourly, or every 5 minutes when the server encodes. */
+    /** The line for the host's scheduled tasks: hourly, or every minute when the server encodes (an encoding starts within a minute of the upload; a run with nothing to do takes a few milliseconds). */
     public static function cronLine(string $rootDir, bool $serverEncoding = false): string
     {
-        return ($serverEncoding ? '*/5 * * * *' : '0 * * * *') . ' php ' . (realpath($rootDir) ?: $rootDir) . '/app/bin/cron.php > /dev/null 2>&1';
+        return ($serverEncoding ? '* * * * *' : '0 * * * *') . ' php ' . (realpath($rootDir) ?: $rootDir) . '/app/bin/cron.php > /dev/null 2>&1';
     }
 
     private function mailer(string $from): Mailer

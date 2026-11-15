@@ -1,6 +1,6 @@
 #!/bin/sh
 # belprise — container start: data volume writable by the web server, the
-# scheduled tasks every 5 minutes (once installed), then Apache.
+# scheduled tasks every minute (once installed), then Apache.
 # A new server opens the installation assistant at http://<address>/installation.
 set -e
 
@@ -36,7 +36,7 @@ fi
         if [ -f "$BELPRISE_CONFIG" ]; then
             su -s /bin/sh www-data -c "BELPRISE_CONFIG='$BELPRISE_CONFIG' BELPRISE_FFMPEG='$BELPRISE_FFMPEG' php /var/www/belprise/app/bin/cron.php" || true
         fi
-        sleep 300
+        sleep 60
     done
 ) &
 

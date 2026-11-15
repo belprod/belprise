@@ -116,6 +116,8 @@ final class InstallerTest extends TestCase
         self::assertStringContainsString('Installation terminée', $done->body);
         self::assertStringContainsString('Invitation envoyée à jules@belprod.test', $done->body);
         self::assertStringContainsString(Installer::cronLine($this->root), html_entity_decode($done->body));
+        self::assertStringStartsWith('0 * * * * php ', Installer::cronLine($this->root));
+        self::assertStringStartsWith('* * * * * php ', Installer::cronLine($this->root, true), 'every minute with the encoding on the server');
         self::assertFalse(Installer::needed($this->root));
         self::assertSame('600', sprintf('%o', fileperms($this->root . '/app/config.php') & 0o777));
         $config = require $this->root . '/app/config.php';

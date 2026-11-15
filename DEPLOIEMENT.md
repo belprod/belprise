@@ -91,7 +91,7 @@ Dans le Terminal, `php -v` doit afficher la même version. Sinon, utilisez dans 
 0 * * * * php /home/<compte>/belprise/app/bin/cron.php > /dev/null
 ```
 
-Avec l'encodage sur le serveur, la tâche passe **toutes les 5 minutes** (`*/5 * * * *`) ; un verrou empêche deux passages simultanés. Essai sans rien modifier : `php ~/belprise/app/bin/cron.php --dry-run`.
+Avec l'encodage sur le serveur, la tâche passe **toutes les minutes** (`* * * * *`) : l'encodage démarre moins d'une minute après l'envoi, et un passage sans rien à faire ne dure que quelques millisecondes. Un verrou empêche deux passages simultanés. Essai sans rien modifier : `php ~/belprise/app/bin/cron.php --dry-run`.
 
 ### 1.6 E-mails (SPF, DKIM, DMARC)
 
@@ -112,7 +112,7 @@ Pour que les invitations n'arrivent pas en indésirables :
 
 ## 2. Docker (VPS, NAS)
 
-L'image contient Apache, PHP 8.3, **FFmpeg** (encodage sur le serveur : choisissez-le à l'étape « Versions de lecture » de l'assistant, ou plus tard dans `/superadmin`) et la tâche planifiée, lancée toutes les 5 minutes. Avec l'encodage sur le serveur, les masters ProRes et MXF s'envoient tels quels : le serveur lit leurs informations, prépare la version de lecture et fait les miniatures. Tout ce qui doit survivre à une mise à jour est dans un seul volume : base, vidéos, sessions **et configuration**.
+L'image contient Apache, PHP 8.3, **FFmpeg** (encodage sur le serveur : choisissez-le à l'étape « Versions de lecture » de l'assistant, ou plus tard dans `/superadmin`) et la tâche planifiée, lancée toutes les minutes. Avec l'encodage sur le serveur, les masters ProRes et MXF s'envoient tels quels : le serveur lit leurs informations, prépare la version de lecture et fait les miniatures. Tout ce qui doit survivre à une mise à jour est dans un seul volume : base, vidéos, sessions **et configuration**.
 
 ### 2.1 Démarrer
 
@@ -201,7 +201,7 @@ sudo systemctl reload apache2
 - **Hôte virtuel** : `belprise.conf` suppose `/var/www/belprise`. Ajoutez `ServerName video.mon-agence.fr`. `AllowOverride All` est indispensable : les règles de sécurité sont dans `public/.htaccess`.
 - **HTTPS** : `sudo apt install certbot python3-certbot-apache && sudo certbot --apache -d video.mon-agence.fr`.
 - **Assistant** : ouvrez `https://video.mon-agence.fr/installation`, avec le code de `sudo cat /var/www/belprise/data/installation-code.txt`. Ensuite, rendez `app/` à root : `sudo chown root:root /var/www/belprise/app && sudo chown root:www-data /var/www/belprise/app/config.php && sudo chmod 640 /var/www/belprise/app/config.php`.
-- **Tâche planifiée** : `sudo crontab -u www-data -e` → `0 * * * * php /var/www/belprise/app/bin/cron.php > /dev/null` (`*/5 * * * *` avec l'encodage sur le serveur).
+- **Tâche planifiée** : `sudo crontab -u www-data -e` → `0 * * * * php /var/www/belprise/app/bin/cron.php > /dev/null` (`* * * * *` avec l'encodage sur le serveur).
 - **Encodage sur le serveur** : avec le paquet `ffmpeg`, choisissez-le dans l'assistant ou dans `/superadmin`, puis réglez le nombre de fils selon le serveur ; `php app/bin/encode-test.php` mesure la vitesse.
 - **E-mails** : `mail()` passe par le `sendmail` du serveur (Postfix, ou `msmtp-mta` relié à un SMTP).
 - **X-Sendfile** (facultatif) : avec `libapache2-mod-xsendfile`, mettez `'xsendfile' => true` ; `XSendFilePath` doit couvrir `data/`.
