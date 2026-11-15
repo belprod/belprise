@@ -249,192 +249,6 @@ a {
   }
 }
 
-/* Product sketch, drawn in CSS (decorative). */
-.mock {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 12px;
-  padding: 14px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  background: var(--surface-1);
-  box-shadow: 0 40px 120px rgb(232 81 95 / 0.12);
-}
-
-.mock__screen {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border-radius: 10px;
-  background:
-    radial-gradient(120% 90% at 18% 20%, #f4c27a 0%, transparent 55%),
-    radial-gradient(90% 80% at 85% 85%, #6a3a8f 0%, transparent 60%),
-    linear-gradient(135deg, #e0745a 0%, #7d3b52 55%, #1d1631 100%);
-}
-
-.mock__overlay {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  background: rgb(10 10 11 / 0.72);
-  font-size: 11.5px;
-}
-
-.mock__overlay .mono {
-  color: var(--accent);
-  margin-right: 6px;
-}
-
-.mock__bar {
-  grid-column: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.mock__track {
-  position: relative;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--border-strong);
-}
-
-.mock__progress {
-  position: absolute;
-  inset: 0 58% 0 0;
-  border-radius: 2px;
-  background: var(--text);
-}
-
-.mock__marker {
-  position: absolute;
-  top: -5px;
-  width: 6px;
-  height: 14px;
-  border-radius: 3px;
-}
-
-.mock__marker--todo {
-  background: var(--status-changes);
-}
-
-.mock__marker--done {
-  background: var(--status-approved);
-}
-
-.mock__marker--range {
-  height: 6px;
-  top: 6px;
-  border-radius: 3px;
-  background: var(--status-changes);
-}
-
-.mock__marker--at14 {
-  left: 14%;
-}
-
-.mock__marker--at52 {
-  left: 52%;
-  width: 14%;
-}
-
-.mock__marker--at80 {
-  left: 80%;
-}
-
-.mock__controls {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.mock__panel {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface-2);
-  font-size: 12px;
-}
-
-.mock__panel-title {
-  font-family: var(--font-display);
-  font-size: 20px;
-}
-
-.mock__item {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px;
-  border-radius: 8px;
-  background: var(--surface-3);
-}
-
-.mock__item-head {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.mock__who {
-  font-weight: 600;
-}
-
-.mock__tc {
-  white-space: nowrap;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-}
-
-.pill {
-  display: inline-flex;
-  flex: none;
-  white-space: nowrap;
-  margin-left: auto;
-  padding: 1px 8px;
-  border-radius: var(--radius-pill);
-  font-size: 10.5px;
-  font-weight: 500;
-}
-
-.pill--todo {
-  background: rgb(255 214 10 / 0.16);
-  color: var(--status-changes);
-}
-
-.pill--done {
-  background: rgb(46 229 157 / 0.15);
-  color: var(--status-approved);
-}
-
-.mock__reply {
-  margin-left: 10px;
-  padding-left: 8px;
-  border-left: 2px solid var(--border-strong);
-  color: var(--text-soft);
-}
-
-@media (max-width: 560px) {
-  .mock {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .mock__panel {
-    grid-column: 1;
-    grid-row: auto;
-  }
-}
-
 /* ---- Sections ------------------------------------------------------------------------- */
 
 .section {
@@ -1519,49 +1333,6 @@ a {
   from { opacity: 0; transform: translateY(8px); }
 }
 
-/* Hero sketch: the playhead moves, markers blink in turn, the revision shows up. */
-.mock__progress {
-  inset: 0;
-  transform-origin: left center;
-  animation: playhead 9s linear infinite;
-}
-
-@keyframes playhead {
-  from { transform: scaleX(0.08); }
-  to { transform: scaleX(0.94); }
-}
-
-.mock__marker {
-  animation: marker-blink 9s ease-in-out infinite;
-}
-
-.mock__marker--at52 { animation-delay: 3.4s; }
-.mock__marker--at80 { animation-delay: 6.3s; }
-
-@keyframes marker-blink {
-  0%, 10%, 100% { transform: scale(1); }
-  4% { transform: scale(1.5); }
-}
-
-.mock__overlay {
-  animation: overlay-cycle 9s ease-in-out infinite;
-}
-
-@keyframes overlay-cycle {
-  0%, 6% { opacity: 0; transform: translateY(6px); }
-  10%, 30% { opacity: 1; transform: none; }
-  36%, 100% { opacity: 0; transform: translateY(6px); }
-}
-
-.mock__item {
-  transition: background-color 200ms ease, transform 200ms var(--ease-out);
-}
-
-.mock__item:hover {
-  background: #202024;
-  transform: translateX(3px);
-}
-
 /* ---- Entrance (hero) --------------------------------------------------------------------- */
 
 .hero > div > * {
@@ -1573,17 +1344,14 @@ a {
 .hero > div > :nth-child(4) { animation-delay: 240ms; }
 .hero > div > :nth-child(5) { animation-delay: 320ms; }
 
-.mock {
-  animation: rise 900ms var(--ease-out) 200ms both, float 7s ease-in-out 1.2s infinite;
+.demo {
+  animation: rise 900ms var(--ease-out) 200ms both;
 }
 
 @keyframes rise {
   from { opacity: 0; translate: 0 18px; }
 }
 
-@keyframes float {
-  50% { transform: translateY(-8px); }
-}
 
 /* ---- Reveal on scroll (where scroll-driven animations exist) ---------------------------- */
 
@@ -1636,6 +1404,184 @@ a {
   from { opacity: 0; transform: translateY(-6px); }
 }
 
+/* ---- Hero animation: a review, from the first revision to the approval -------------------
+   One 16 s loop (1 s = 6.25 %). 0-2.8 s the video plays; 2.8 s Claire types, the video
+   pauses, a yellow marker lands at 01:00:04:10 and her revision shows up; 6.5-7.3 s Marc
+   marks a range (violet), types, his revision shows up; 11 s the team sets the first one
+   to "Fait" and replies; 13.2 s Claire approves the version. Without motion: the end. */
+
+.demo {
+  margin: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-1);
+  box-shadow: 0 40px 120px rgb(232 81 95 / 0.12);
+}
+
+.demo__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-ui);
+}
+
+.demo__svg text { fill: var(--text-soft); font-size: 13px; }
+.demo__mono { font-family: var(--font-mono); }
+.demo__svg .demo__accent { fill: var(--accent); }
+.demo__svg .demo__violet { fill: var(--status-to-review); }
+.demo__svg .demo__muted { fill: var(--text-muted); }
+.demo__svg .demo__small { font-size: 11px; }
+.demo__end { text-anchor: end; font-size: 12px; }
+
+.demo__tab { fill: var(--surface-2); stroke: var(--border); }
+.demo__tab--on { fill: rgb(232 81 95 / 0.14); stroke: var(--accent); }
+.demo__svg .demo__tab-text { text-anchor: middle; font-size: 12px; font-weight: 600; fill: var(--text-muted); }
+.demo__svg .demo__tab-text--on { fill: var(--text); }
+
+.demo__pill--violet { fill: rgb(169 112 255 / 0.16); }
+.demo__pill--yellow { fill: rgb(255 214 10 / 0.14); }
+.demo__pill--green { fill: rgb(46 229 157 / 0.14); }
+.demo__svg .demo__pill-text { text-anchor: middle; font-size: 12px; font-weight: 600; }
+.demo__svg .demo__pill-text--violet { fill: var(--status-to-review); }
+.demo__svg .demo__pill-text--yellow { fill: var(--status-changes); }
+.demo__svg .demo__pill-text--green { fill: var(--status-approved); }
+
+.demo__btn { fill: var(--accent); }
+.demo__btn--done { fill: rgb(46 229 157 / 0.12); stroke: var(--status-approved); }
+.demo__svg .demo__btn-text { text-anchor: middle; font-size: 13px; font-weight: 600; fill: #0a0a0b; }
+.demo__svg .demo__btn-text--done { fill: var(--status-approved); }
+
+.demo__soleil { fill: #ffd27a; opacity: 0.85; }
+.demo__colline { fill: #1d1430; }
+.demo__colline--loin { fill: #4a2440; }
+.demo__logo rect { fill: rgb(255 255 255 / 0.9); }
+.demo__svg .demo__logo text { text-anchor: middle; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; fill: #1d1430; }
+.demo__chip { fill: rgb(10 10 11 / 0.78); }
+.demo__svg .demo__chip-text { font-size: 12.5px; fill: var(--text); }
+
+.demo__track { fill: var(--surface-3); }
+.demo__progress { fill: var(--accent); }
+.demo__range { fill: rgb(169 112 255 / 0.85); }
+.demo__mark { stroke: var(--surface-1); stroke-width: 2; }
+.demo__mark--yellow { fill: var(--status-changes); }
+.demo__mark--green { fill: var(--status-approved); }
+.demo__head { fill: #fff; stroke: var(--surface-1); stroke-width: 2; }
+.demo__icon { fill: var(--text); }
+.demo__svg .demo__tc { font-size: 14px; fill: var(--text); }
+
+.demo__panel { fill: var(--surface-2); stroke: var(--border); }
+.demo__svg .demo__title { font-family: var(--font-display); font-size: 22px; fill: var(--text); }
+.demo__card { fill: var(--surface-3); stroke: var(--border); }
+.demo__avatar { fill: rgb(232 81 95 / 0.22); }
+.demo__avatar--violet { fill: rgb(169 112 255 / 0.22); }
+.demo__svg .demo__avatar-text { text-anchor: middle; font-size: 11px; font-weight: 700; fill: var(--text); }
+.demo__svg .demo__name { font-size: 12.5px; font-weight: 600; fill: var(--text); }
+.demo__svg .demo__body { font-size: 12.5px; }
+.demo__thread { fill: none; stroke: var(--border); stroke-width: 1.5; }
+.demo__input { fill: var(--surface-1); stroke: var(--border); }
+.demo__input--focus { stroke: var(--accent); }
+.demo__cursor { fill: #fff; stroke: #0a0a0b; stroke-width: 1.2; stroke-linejoin: round; }
+
+/* The loop. Scaled elements keep their own box as reference. */
+.d-scene { animation: d-scene 16s linear infinite; }
+.d-progress, .d-range { transform-box: fill-box; transform-origin: left center; }
+.d-mark-todo, .d-press { transform-box: fill-box; transform-origin: center; }
+.d-press { transform-origin: 0 0; }
+.d-progress { animation: d-progress 16s linear infinite; }
+.d-head { animation: d-head 16s linear infinite; }
+.d-range { animation: d-range 16s linear infinite; }
+.d-mark-todo { animation: d-mark-todo 16s linear infinite; }
+.d-playing { animation: d-playing 16s linear infinite; }
+.d-paused { animation: d-paused 16s linear infinite; }
+.d-tc1 { animation: d-tc1 16s linear infinite; }
+.d-tc2 { animation: d-tc2 16s linear infinite; }
+.d-tc3 { animation: d-tc3 16s linear infinite; }
+.d-tc4 { animation: d-tc4 16s linear infinite; }
+.d-tc5 { animation: d-tc5 16s linear infinite; }
+.d-tc6 { animation: d-tc6 16s linear infinite; }
+.d-chip { animation: d-chip 16s linear infinite; }
+.d-status-review { animation: d-status-review 16s linear infinite; }
+.d-status-changes { animation: d-status-changes 16s linear infinite; }
+.d-status-ok, .d-validated { animation: d-done 16s linear infinite; }
+.d-validate { animation: d-validate 16s linear infinite; }
+.d-card1 { animation: d-card1 16s var(--ease-out) infinite; }
+.d-card2 { animation: d-card2 16s var(--ease-out) infinite; }
+.d-pill-todo { animation: d-pill-todo 16s linear infinite; }
+.d-pill-done, .d-mark-done { animation: d-pill-done 16s linear infinite; }
+.d-reply { animation: d-reply 16s linear infinite; }
+.d-typing { animation: d-typing 16s linear infinite; }
+.d-placeholder { animation: d-placeholder 16s linear infinite; }
+.d-typed1 { animation: d-typed1 16s linear infinite; }
+.d-typed2 { animation: d-typed2 16s linear infinite; }
+.d-cursor { animation: d-cursor 16s ease-in-out infinite; }
+.d-press { animation: d-press 16s linear infinite; }
+
+@keyframes d-scene { 0% { opacity: 0; } 2%, 95.5% { opacity: 1; } 99%, 100% { opacity: 0; } }
+@keyframes d-progress {
+  0% { transform: scaleX(0); }
+  17.5%, 21.9% { transform: scaleX(0.25); }
+  40.6% { transform: scaleX(0.55); }
+  45.6%, 48.1% { transform: scaleX(0.68); }
+  62.5%, 100% { transform: scaleX(0.9); }
+}
+@keyframes d-head {
+  0% { transform: translateX(0); }
+  17.5%, 21.9% { transform: translateX(112.5px); }
+  40.6% { transform: translateX(247.5px); }
+  45.6%, 48.1% { transform: translateX(306px); }
+  62.5%, 100% { transform: translateX(405px); }
+}
+@keyframes d-range { 0%, 40.55% { opacity: 0; transform: scaleX(0); } 40.6% { opacity: 1; transform: scaleX(0); } 45.6%, 100% { opacity: 1; transform: scaleX(1); } }
+@keyframes d-mark-todo {
+  0%, 20.5% { opacity: 0; transform: scale(0); }
+  21.5% { opacity: 1; transform: scale(1.5); }
+  22.5%, 68.7% { opacity: 1; transform: scale(1); }
+  68.75%, 100% { opacity: 0; }
+}
+@keyframes d-playing { 0%, 17.45% { opacity: 1; } 17.5%, 21.85% { opacity: 0; } 21.9%, 45.55% { opacity: 1; } 45.6%, 48.05% { opacity: 0; } 48.1%, 62.45% { opacity: 1; } 62.5%, 100% { opacity: 0; } }
+@keyframes d-paused { 0%, 17.45% { opacity: 0; } 17.5%, 21.85% { opacity: 1; } 21.9%, 45.55% { opacity: 0; } 45.6%, 48.05% { opacity: 1; } 48.1%, 62.45% { opacity: 0; } 62.5%, 100% { opacity: 1; } }
+@keyframes d-tc1 { 0%, 17.45% { opacity: 1; } 17.5%, 100% { opacity: 0; } }
+@keyframes d-tc2 { 0%, 17.45% { opacity: 0; } 17.5%, 21.85% { opacity: 1; } 21.9%, 100% { opacity: 0; } }
+@keyframes d-tc3 { 0%, 21.85% { opacity: 0; } 21.9%, 40.55% { opacity: 1; } 40.6%, 100% { opacity: 0; } }
+@keyframes d-tc4 { 0%, 40.55% { opacity: 0; } 40.6%, 48.05% { opacity: 1; } 48.1%, 100% { opacity: 0; } }
+@keyframes d-tc5 { 0%, 48.05% { opacity: 0; } 48.1%, 62.45% { opacity: 1; } 62.5%, 100% { opacity: 0; } }
+@keyframes d-tc6 { 0%, 62.45% { opacity: 0; } 62.5%, 100% { opacity: 1; } }
+@keyframes d-chip { 0%, 20.5% { opacity: 0; transform: translateY(6px); } 22%, 37% { opacity: 1; transform: none; } 38.5%, 100% { opacity: 0; transform: translateY(6px); } }
+@keyframes d-status-review { 0%, 20.55% { opacity: 1; } 20.6%, 100% { opacity: 0; } }
+@keyframes d-status-changes { 0%, 20.55% { opacity: 0; } 20.6%, 82.45% { opacity: 1; } 82.5%, 100% { opacity: 0; } }
+@keyframes d-done { 0%, 82.45% { opacity: 0; } 82.5%, 100% { opacity: 1; } }
+@keyframes d-validate { 0%, 82.45% { opacity: 1; } 82.5%, 100% { opacity: 0; } }
+@keyframes d-card1 { 0%, 20.5% { opacity: 0; transform: translateY(10px); } 22.5%, 100% { opacity: 1; transform: none; } }
+@keyframes d-card2 { 0%, 48% { opacity: 0; transform: translateY(10px); } 50%, 100% { opacity: 1; transform: none; } }
+@keyframes d-pill-todo { 0%, 68.7% { opacity: 1; } 68.75%, 100% { opacity: 0; } }
+@keyframes d-pill-done { 0%, 68.7% { opacity: 0; } 68.75%, 100% { opacity: 1; } }
+@keyframes d-reply { 0%, 71% { opacity: 0; } 73%, 100% { opacity: 1; } }
+@keyframes d-typing { 0%, 17.45% { opacity: 0; } 17.5%, 20.55% { opacity: 1; } 20.6%, 45.55% { opacity: 0; } 45.6%, 48.05% { opacity: 1; } 48.1%, 100% { opacity: 0; } }
+@keyframes d-placeholder { 0%, 17.45% { opacity: 1; } 17.5%, 20.55% { opacity: 0; } 20.6%, 45.55% { opacity: 1; } 45.6%, 48.05% { opacity: 0; } 48.1%, 100% { opacity: 1; } }
+@keyframes d-typed1 { 0%, 17.45% { opacity: 0; } 17.5%, 20.55% { opacity: 1; } 20.6%, 100% { opacity: 0; } }
+@keyframes d-typed2 { 0%, 45.55% { opacity: 0; } 45.6%, 48.05% { opacity: 1; } 48.1%, 100% { opacity: 0; } }
+@keyframes d-cursor {
+  0%, 12% { transform: translate(640px, 300px); }
+  17% { transform: translate(588px, 400px); }
+  22% { transform: translate(588px, 400px); }
+  36% { transform: translate(380px, 250px); }
+  44% { transform: translate(588px, 400px); }
+  49% { transform: translate(588px, 400px); }
+  60% { transform: translate(640px, 300px); }
+  67.5% { transform: translate(682px, 112px); }
+  72% { transform: translate(682px, 112px); }
+  78% { transform: translate(660px, 170px); }
+  81.5% { transform: translate(632px, 24px); }
+  90% { transform: translate(632px, 24px); }
+  97%, 100% { transform: translate(640px, 300px); }
+}
+@keyframes d-press {
+  0%, 17% { transform: scale(1); } 17.6% { transform: scale(0.8); } 18.3%, 45% { transform: scale(1); }
+  45.6% { transform: scale(0.8); } 46.3%, 68.2% { transform: scale(1); } 68.75% { transform: scale(0.8); }
+  69.4%, 82% { transform: scale(1); } 82.5% { transform: scale(0.8); } 83.2%, 100% { transform: scale(1); }
+}
+
 /* ---- Reduced motion ------------------------------------------------------------------ */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1659,4 +1605,13 @@ a {
   .plan--featured:hover {
     transform: translateY(-10px);
   }
+
+  /* Hero animation: the end of the story (revisions handled, version approved), still. */
+  .d-status-review, .d-status-changes, .d-validate, .d-mark-todo, .d-pill-todo, .d-playing,
+  .d-tc1, .d-tc2, .d-tc3, .d-tc4, .d-tc5, .d-chip, .d-typing, .d-typed1, .d-typed2, .d-cursor {
+    opacity: 0;
+  }
+
+  .d-progress { transform: scaleX(0.9); }
+  .d-head { transform: translateX(405px); }
 }

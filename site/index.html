@@ -40,31 +40,96 @@
           <p class="hero__note muted">Gratuit · à installer chez vous · code source ouvert à la lecture</p>
         </div>
 
-        <figure class="mock" aria-label="Aperçu : une vidéo avec ses révisions placées sur la timeline, et le panneau des révisions.">
-          <div class="mock__screen" aria-hidden="true">
-            <p class="mock__overlay"><span class="mono">01:00:04:10</span>Claire : le logo arrive un peu tôt</p>
-          </div>
-          <div class="mock__bar" aria-hidden="true">
-            <div class="mock__track">
-              <span class="mock__progress"></span>
-              <span class="mock__marker mock__marker--todo mock__marker--at14"></span>
-              <span class="mock__marker mock__marker--range mock__marker--at52"></span>
-              <span class="mock__marker mock__marker--done mock__marker--at80"></span>
-            </div>
-            <div class="mock__controls"><span class="mono">01:00:12:08</span><span class="mono">25 i/s · V3</span></div>
-          </div>
-          <div class="mock__panel" aria-hidden="true">
-            <p class="mock__panel-title">Révisions</p>
-            <div class="mock__item">
-              <p class="mock__item-head"><span class="mock__who">Claire</span><span class="mock__tc">01:00:04:10</span><span class="pill pill--todo">À faire</span></p>
-              <p>Le logo arrive un peu tôt, on peut le décaler ?</p>
-            </div>
-            <div class="mock__item">
-              <p class="mock__item-head"><span class="mock__who">Marc</span><span class="mock__tc">01:00:22 → 26:14</span><span class="pill pill--done">Fait</span></p>
-              <p>Étalonnage plus froid sur ce passage.</p>
-              <p class="mock__reply">Corrigé dans la V3.</p>
-            </div>
-          </div>
+        <figure class="demo">
+          <svg class="demo__svg" viewBox="0 0 720 440" role="img" aria-labelledby="demo-titre demo-desc">
+            <title id="demo-titre">belprise en action</title>
+            <desc id="demo-desc">Une vidéo se lit. Claire écrit une révision : la vidéo se met en pause, un marqueur jaune se pose sur la timeline à 01:00:04:10 et la révision arrive dans le panneau. Marc révise une plage, marquée en violet. L’équipe passe la première révision en « Fait » et répond « Corrigé dans la V3 ». Claire valide la version : son statut passe au vert.</desc>
+            <defs>
+              <linearGradient id="demo-ciel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2b1f4a" />
+                <stop offset="0.55" stop-color="#c2475a" />
+                <stop offset="1" stop-color="#f2a65a" />
+              </linearGradient>
+              <clipPath id="demo-cadre"><rect x="0" y="52" width="470" height="264" rx="10" /></clipPath>
+            </defs>
+            <g class="d-scene">
+              <!-- Versions and status -->
+              <g class="demo__tabs">
+                <rect x="0" y="7" width="34" height="26" rx="13" class="demo__tab" /><text x="17" y="24.5" class="demo__tab-text">V1</text>
+                <rect x="40" y="7" width="34" height="26" rx="13" class="demo__tab" /><text x="57" y="24.5" class="demo__tab-text">V2</text>
+                <rect x="80" y="7" width="34" height="26" rx="13" class="demo__tab demo__tab--on" /><text x="97" y="24.5" class="demo__tab-text demo__tab-text--on">V3</text>
+              </g>
+              <g class="d-w d-status-review"><rect x="126" y="9" width="84" height="22" rx="11" class="demo__pill demo__pill--violet" /><text x="168" y="24" class="demo__pill-text demo__pill-text--violet">À valider</text></g>
+              <g class="d-w d-status-changes"><rect x="126" y="9" width="172" height="22" rx="11" class="demo__pill demo__pill--yellow" /><text x="212" y="24" class="demo__pill-text demo__pill-text--yellow">Modifications demandées</text></g>
+              <g class="d-w d-status-ok"><rect x="126" y="9" width="70" height="22" rx="11" class="demo__pill demo__pill--green" /><text x="161" y="24" class="demo__pill-text demo__pill-text--green">Validé</text></g>
+              <g class="d-w d-validate"><rect x="560" y="4" width="160" height="32" rx="16" class="demo__btn" /><text x="640" y="25" class="demo__btn-text">Valider la V3</text></g>
+              <g class="d-w d-validated"><rect x="530" y="4" width="190" height="32" rx="16" class="demo__btn demo__btn--done" /><text x="625" y="25" class="demo__btn-text demo__btn-text--done">✓ Validée par Claire</text></g>
+
+              <!-- Video -->
+              <g clip-path="url(#demo-cadre)">
+                <rect x="0" y="52" width="470" height="264" fill="url(#demo-ciel)" />
+                <circle cx="318" cy="214" r="46" class="demo__soleil" />
+                <path d="M0 262 C 80 226 150 236 222 254 S 380 230 470 248 V 316 H 0 Z" class="demo__colline demo__colline--loin" />
+                <path d="M0 290 C 110 262 210 276 300 292 S 420 280 470 286 V 316 H 0 Z" class="demo__colline" />
+                <g class="demo__logo"><rect x="388" y="68" width="66" height="22" rx="5" /><text x="421" y="83.5">MARQUE</text></g>
+              </g>
+              <g class="d-w d-chip">
+                <rect x="14" y="270" width="300" height="30" rx="8" class="demo__chip" />
+                <text x="28" y="290" class="demo__chip-text"><tspan class="demo__mono demo__accent">01:00:04:10</tspan> Claire : le logo arrive un peu tôt</text>
+              </g>
+
+              <!-- Timeline -->
+              <rect x="10" y="334" width="450" height="6" rx="3" class="demo__track" />
+              <rect x="10" y="334" width="450" height="6" rx="3" class="d-progress demo__progress" />
+              <rect x="257.5" y="332" width="58.5" height="10" rx="4" class="d-range demo__range" />
+              <circle cx="122.5" cy="337" r="6.5" class="d-mark-todo demo__mark demo__mark--yellow" />
+              <circle cx="122.5" cy="337" r="6.5" class="d-w d-mark-done demo__mark demo__mark--green" />
+              <g class="d-head"><circle cx="10" cy="337" r="7.5" class="demo__head" /></g>
+              <g class="d-w d-playing"><rect x="10" y="356" width="4" height="16" rx="1.5" class="demo__icon" /><rect x="19" y="356" width="4" height="16" rx="1.5" class="demo__icon" /></g>
+              <g class="d-w d-paused"><path d="M11 356 L25 364 L11 372 Z" class="demo__icon" /></g>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc1">01:00:02:16</text>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc2">01:00:04:10</text>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc3">01:00:14:05</text>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc4">01:00:22:00 → 26:14</text>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc5">01:00:31:02</text>
+              <text x="40" y="369" class="demo__mono demo__tc d-w d-tc6">01:00:36:20</text>
+              <text x="460" y="369" class="demo__mono demo__muted demo__end">25 i/s · V3</text>
+
+              <!-- Revisions -->
+              <rect x="490" y="52" width="230" height="388" rx="12" class="demo__panel" />
+              <text x="506" y="82" class="demo__title">Révisions</text>
+              <g transform="translate(504 96)">
+                <g class="d-card1">
+                  <rect width="202" height="104" rx="10" class="demo__card" />
+                  <circle cx="18" cy="20" r="9" class="demo__avatar" /><text x="18" y="24" class="demo__avatar-text">C</text>
+                  <text x="34" y="18" class="demo__name">Claire</text>
+                  <text x="34" y="36" class="demo__mono demo__accent demo__small">01:00:04:10</text>
+                  <g class="d-w d-pill-todo"><rect x="140" y="6" width="52" height="18" rx="9" class="demo__pill demo__pill--yellow" /><text x="166" y="18.5" class="demo__pill-text demo__pill-text--yellow demo__small">À faire</text></g>
+                  <g class="d-w d-pill-done"><rect x="150" y="6" width="42" height="18" rx="9" class="demo__pill demo__pill--green" /><text x="171" y="18.5" class="demo__pill-text demo__pill-text--green demo__small">Fait</text></g>
+                  <text x="12" y="62" class="demo__body">Le logo arrive un peu tôt.</text>
+                  <g class="d-reply"><path d="M14 72 V 84 H 22" class="demo__thread" /><text x="28" y="88" class="demo__body demo__muted">Corrigé dans la V3.</text></g>
+                </g>
+              </g>
+              <g transform="translate(504 210)">
+                <g class="d-card2">
+                  <rect width="202" height="78" rx="10" class="demo__card" />
+                  <circle cx="18" cy="20" r="9" class="demo__avatar demo__avatar--violet" /><text x="18" y="24" class="demo__avatar-text">M</text>
+                  <text x="34" y="18" class="demo__name">Marc</text>
+                  <text x="34" y="36" class="demo__mono demo__violet demo__small">01:00:22 → 26:14</text>
+                  <rect x="140" y="6" width="52" height="18" rx="9" class="demo__pill demo__pill--yellow" /><text x="166" y="18.5" class="demo__pill-text demo__pill-text--yellow demo__small">À faire</text>
+                  <text x="12" y="62" class="demo__body">Étalonnage plus froid ici.</text>
+                </g>
+              </g>
+              <rect x="504" y="386" width="202" height="38" rx="9" class="demo__input" />
+              <rect x="504" y="386" width="202" height="38" rx="9" class="d-w d-typing demo__input demo__input--focus" />
+              <text x="516" y="410" class="d-w d-placeholder demo__body demo__muted">Votre révision…</text>
+              <text x="516" y="410" class="d-w d-typed1 demo__body">Le logo arrive un peu tôt.</text>
+              <text x="516" y="410" class="d-w d-typed2 demo__body">Étalonnage plus froid ici.</text>
+
+              <!-- Pointer -->
+              <g class="d-cursor"><g class="d-press"><path d="M0 0 L0 18 L5 13.5 L8.5 21 L11.5 19.6 L8 12.5 L14.5 12.5 Z" class="demo__cursor" /></g></g>
+            </g>
+          </svg>
         </figure>
       </section>
 
