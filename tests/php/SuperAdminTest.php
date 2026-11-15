@@ -112,7 +112,7 @@ final class SuperAdminTest extends AppTestCase
         self::assertTrue($created['sent']);
         $mail = end($this->outbox->messages);
         self::assertSame('nora@studio-nord.fr', $mail->to);
-        self::assertSame('Votre espace Belprise « Studio Nord » est prêt', $mail->subject);
+        self::assertSame('Votre espace belprise « Studio Nord » est prêt', $mail->subject);
         self::assertStringContainsString('avec 250 Go de stockage', $mail->text);
         self::assertStringContainsString($created['link'], $mail->text);
         self::assertSame('email', $this->decode($this->superPost('/api/superadmin/organizations', ['name' => 'Doublon', 'email' => self::ADMIN_EMAIL, 'quotaGb' => 5]))['field']);
@@ -150,7 +150,7 @@ final class SuperAdminTest extends AppTestCase
         $this->db()->exec('DELETE FROM login_attempts');
         $this->postJson('/api/admin/login', ['email' => self::ADMIN_EMAIL, 'password' => self::ADMIN_PASSWORD]);
         $log = $this->api('GET', '/api/admin/organization/log');
-        self::assertSame([['Exploitant Belprise', 'Quota changé', '5,0 Go → 1 To']], array_map(static fn ($r) => [$r['actor'], $r['action'], $r['details']], $log));
+        self::assertSame([['Exploitant belprise', 'Quota changé', '5,0 Go → 1 To']], array_map(static fn ($r) => [$r['actor'], $r['action'], $r['details']], $log));
     }
 
     // ---- Quotas ------------------------------------------------------------------------

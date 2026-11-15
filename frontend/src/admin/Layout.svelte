@@ -125,7 +125,7 @@
         <strong>Suppression de l’organisation programmée le {formatLongDate(session.lifecycle.deletionAt)}.</strong>
         Toutes les données seront effacées ce jour-là. D’ici là, récupérez vos masters (« Télécharger le master » sur chaque version) ;
         les liens partagés restent actifs, les nouveaux envois sont bloqués.
-        {session.lifecycle.deletionBy === 'operator' ? 'Seul l’exploitant de Belprise peut annuler cette demande.' : 'Un administrateur peut l’annuler dans la page Équipe.'}
+        {session.lifecycle.deletionBy === 'operator' ? 'Seul l’exploitant de belprise peut annuler cette demande.' : 'Un administrateur peut l’annuler dans la page Équipe.'}
       </p>
     {:else if session.lifecycle?.purgeAt && session.storage}
       <p class="quota-banner quota-banner--full" role="status">

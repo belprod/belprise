@@ -46,6 +46,7 @@ final class Installer
     private const CODE_FILE = 'installation-code.txt';
     private const STATE_FILE = 'installation-state.json';
     private const MAX_ATTEMPTS = 10;
+    private const LOCK_SECONDS = 900;
     private const STEPS = ['config' => 2, 'account' => 3, 'totp' => 4, 'organization' => 5, 'encoding' => 6, 'summary' => 7];
     public const TOTAL_STEPS = 7;
 
@@ -119,7 +120,7 @@ HTML, 200, 1);
     {
         $data = $request->form();
         $code = (string) ($data['code'] ?? '');
-        $this->checkCode($code);
+        $this->checkCode($code, Request::network($request->clientIp([])));
         $step = (string) ($data['step'] ?? '');
         $state = $this->state() ?? [];
 
@@ -473,8 +474,8 @@ HTML, 200, 7);
             $link = $config->appUrl . '/invitation/' . $token;
             $sent = $this->mailer($config->mailFrom)->send(new Message(
                 (string) $org['admin'],
-                'Votre espace Belprise « ' . $org['name'] . ' » est prêt',
-                "Bonjour,\n\nL’espace « " . $org['name'] . " » vient d’être ouvert pour vous sur Belprise.\n\n"
+                'Votre espace belprise « ' . $org['name'] . ' » est prêt',
+                "Bonjour,\n\nL’espace « " . $org['name'] . " » vient d’être ouvert pour vous sur belprise.\n\n"
                 . "Vous en êtes l’administrateur. Pour créer votre compte, ouvrez ce lien (valable 7 jours, une seule fois) :\n"
                 . $link . "\n\n--\nBelprise, propulsé par belprod — https://belprod.fr\n",
             ));
@@ -484,6 +485,7 @@ HTML, 200, 7);
         }
         @unlink($this->dataDir . '/' . self::STATE_FILE);
         @unlink($this->dataDir . '/' . self::CODE_FILE);
+        @unlink($this->dataDir . '/installation-attempts.json');
 
         $server = ($state['encoding'] ?? 'browser') === 'server';
         $cron = self::e(self::cronLine($this->rootDir, $server));
@@ -545,26 +547,36 @@ HTML);
         return trim((string) file_get_contents($file));
     }
 
-    private function checkCode(string $given): void
+    /**
+     * Wrong codes are counted per network: after MAX_ATTEMPTS, that network waits
+     * LOCK_SECONDS. The code itself never changes, so nobody else can make the
+     * owner's copy useless.
+     */
+    private function checkCode(string $given, string $network): void
     {
         if (!is_dir($this->dataDir) || !is_file($this->dataDir . '/' . self::CODE_FILE)) {
             throw new HttpException(403, 'Code de déverrouillage introuvable : rechargez la page d’installation.');
         }
-        $attemptsFile = $this->dataDir . '/installation-attempts';
-        $attempts = (int) @file_get_contents($attemptsFile);
-        if ($attempts >= self::MAX_ATTEMPTS) {
-            // Too many wrong codes: a new one replaces it.
-            @unlink($this->dataDir . '/' . self::CODE_FILE);
-            @unlink($attemptsFile);
-            $this->code();
-            throw new HttpException(429, 'Trop d’essais : un nouveau code a été écrit dans data/installation-code.txt.');
+        $attemptsFile = $this->dataDir . '/installation-attempts.json';
+        $attempts = json_decode((string) @file_get_contents($attemptsFile), true);
+        $attempts = is_array($attempts) ? $attempts : [];
+        $now = time();
+        // Old entries are forgotten.
+        $attempts = array_filter($attempts, static fn ($a) => is_array($a) && $now - (int) ($a[1] ?? 0) < self::LOCK_SECONDS);
+        $key = hash('sha256', $network);
+        [$count] = $attempts[$key] ?? [0, 0];
+        if ($count >= self::MAX_ATTEMPTS) {
+            throw new HttpException(429, 'Trop de codes incorrects depuis ce réseau : réessayez dans 15 minutes.');
         }
         $normalize = static fn (string $c): string => strtoupper(preg_replace('/[^A-Za-z0-9]/', '', $c) ?? '');
         if (!hash_equals($normalize($this->code()), $normalize($given))) {
-            file_put_contents($attemptsFile, (string) ($attempts + 1));
+            $attempts[$key] = [$count + 1, $now];
+            file_put_contents($attemptsFile, json_encode($attempts), LOCK_EX);
+            @chmod($attemptsFile, 0600);
             throw new HttpException(403, 'Code de déverrouillage incorrect.');
         }
-        @unlink($attemptsFile);
+        unset($attempts[$key]);
+        file_put_contents($attemptsFile, json_encode($attempts), LOCK_EX);
     }
 
     /** @param array<string, mixed> $state */
@@ -614,7 +626,7 @@ HTML);
   .small { margin: 4px 0 0; font-size: 13px; color: #9a9aa0; }
   .error { padding: 10px 14px; border-radius: 10px; background: rgb(232 81 95 / 0.12); color: #ff8a95; }
   .notice { padding: 10px 14px; border-radius: 10px; background: rgb(46 229 157 / 0.1); color: #2ee59d; }
-  .choice { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 1px solid #303035; border-radius: 10px; } .choice input { display: inline-block; width: auto; margin: 5px 0 0; } .choice.disabled { color: #9a9aa0; }
+  .choice { display: block; position: relative; padding: 12px 14px 12px 38px; border: 1px solid #303035; border-radius: 10px; } .choice input { position: absolute; left: 14px; top: 15px; width: auto; margin: 0; } .choice.disabled { color: #9a9aa0; }
   .checks { padding-left: 18px; font-size: 14px; } .ok { color: #2ee59d; } .ko { color: #ff6b6b; } .warn { color: #ffd60a; }
   .summary { display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; } .summary dt { color: #9a9aa0; } .summary dd { margin: 0; overflow-wrap: anywhere; }
   pre { overflow: auto; padding: 12px; border: 1px solid #303035; border-radius: 10px; font-size: 13px; }

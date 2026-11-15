@@ -47,7 +47,7 @@ final class OrganizationDeletion
             'UPDATE organizations SET deletion_requested_at = ?, deletion_at = ?, deletion_by = ?, deletion_requested_by = ?, deletion_reminded = NULL WHERE id = ?'
         )->execute([self::utc($now), $at, $by, $requestedBy, $organizationId]);
         $day = Dates::frenchDay($at);
-        $who = $by === 'operator' ? 'l’exploitant de Belprise' : $requestedBy;
+        $who = $by === 'operator' ? 'l’exploitant de belprise' : $requestedBy;
         (new AuditLog($this->db))->add($organizationId, $requestedBy, 'Suppression de l’organisation demandée', 'Exécution le ' . $day);
         (new PlatformLog($this->db))->add($organizationId, (string) $organization['name'], $requestedBy, 'Suppression demandée', 'Exécution le ' . $day);
         $this->notices->send(
@@ -57,7 +57,7 @@ final class OrganizationDeletion
             . 'Elle sera exécutée le ' . $day . ' : comptes, clients, projets, vidéos, masters, révisions, collections et liens seront effacés définitivement.' . "\n\n"
             . "D’ici là, vous gardez l’accès pour récupérer vos masters (bouton « Télécharger le master » de chaque version) ; les liens partagés restent actifs ; les nouveaux envois sont bloqués.\n"
             . ($by === 'operator'
-                ? 'Seul l’exploitant de Belprise peut annuler cette demande : répondez-lui si elle est une erreur.'
+                ? 'Seul l’exploitant de belprise peut annuler cette demande : répondez-lui si elle est une erreur.'
                 : 'Un administrateur peut l’annuler d’ici là, dans la page Équipe.'),
         );
 
@@ -74,7 +74,7 @@ final class OrganizationDeletion
             throw new HttpException(409, 'Aucune suppression n’est programmée.');
         }
         if ($by === 'admin' && $organization['deletion_by'] === 'operator') {
-            throw new HttpException(403, 'Cette suppression a été demandée par l’exploitant de Belprise : lui seul peut l’annuler.');
+            throw new HttpException(403, 'Cette suppression a été demandée par l’exploitant de belprise : lui seul peut l’annuler.');
         }
         $this->db->prepare(
             'UPDATE organizations SET deletion_requested_at = NULL, deletion_at = NULL, deletion_by = NULL, deletion_requested_by = NULL, deletion_reminded = NULL WHERE id = ?'
@@ -85,7 +85,7 @@ final class OrganizationDeletion
             $this->notices->adminEmails($organizationId),
             'Belprise : la suppression de « ' . $organization['name'] . ' » est annulée',
             'La suppression programmée de votre organisation « ' . $organization['name'] . ' » a été annulée par '
-            . ($by === 'operator' ? 'l’exploitant de Belprise' : $cancelledBy) . ". Rien ne sera effacé, et les envois sont de nouveau possibles.",
+            . ($by === 'operator' ? 'l’exploitant de belprise' : $cancelledBy) . ". Rien ne sera effacé, et les envois sont de nouveau possibles.",
         );
     }
 
@@ -125,7 +125,7 @@ final class OrganizationDeletion
                     . ($step === 1 ? ', demain' : '') . ".\n\n"
                     . 'Pensez à récupérer vos masters (bouton « Télécharger le master » de chaque version). '
                     . ($organization['deletion_by'] === 'operator'
-                        ? 'Seul l’exploitant de Belprise peut annuler cette suppression.'
+                        ? 'Seul l’exploitant de belprise peut annuler cette suppression.'
                         : 'Un administrateur peut encore l’annuler dans la page Équipe.'),
                 );
             }
@@ -228,7 +228,7 @@ final class OrganizationDeletion
             $recipients,
             'Belprise : « ' . $organization['name'] . ' » a été supprimée',
             'Comme annoncé, l’organisation « ' . $organization['name'] . ' » et toutes ses données ont été effacées définitivement aujourd’hui ('
-            . self::describe($counts) . ").\n\nVos comptes Belprise n’existent plus. Merci d’avoir utilisé Belprise.",
+            . self::describe($counts) . ").\n\nVos comptes belprise n’existent plus. Merci d’avoir utilisé belprise.",
         );
     }
 

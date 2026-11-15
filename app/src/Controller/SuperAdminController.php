@@ -27,7 +27,7 @@ use DateTimeImmutable;
  */
 final class SuperAdminController
 {
-    public const ACTOR = 'Exploitant Belprise';
+    public const ACTOR = 'Exploitant belprise';
 
     public function __construct(
         private readonly Services $services,
@@ -134,7 +134,7 @@ final class SuperAdminController
         $now = time();
         [$id, $token] = Database::transaction($services->db(), static function () use ($services, $name, $email, $quota, $now): array {
             if ($services->users()->findByEmail($email) !== null) {
-                throw new HttpException(422, 'Cette adresse a déjà un compte Belprise.', ['field' => 'email']);
+                throw new HttpException(422, 'Cette adresse a déjà un compte belprise.', ['field' => 'email']);
             }
             $id = $services->organizations()->create($name, $quota);
             $invitation = $services->invitations()->create($id, $email, 'admin', null, $now);
@@ -148,9 +148,9 @@ final class SuperAdminController
         $link = $this->baseUrl($request) . '/invitation/' . $token;
         $sent = $services->mailer()->send(new Message(
             $email,
-            'Votre espace Belprise « ' . $name . ' » est prêt',
+            'Votre espace belprise « ' . $name . ' » est prêt',
             "Bonjour,\n\n"
-            . 'L’espace « ' . $name . ' » vient d’être ouvert pour vous sur Belprise'
+            . 'L’espace « ' . $name . ' » vient d’être ouvert pour vous sur belprise'
             . ($quota === null ? '' : ', avec ' . Quota::gigabytes($quota) . ' de stockage') . ".\n\n"
             . "Vous en êtes l’administrateur. Pour créer votre compte, ouvrez ce lien (valable 7 jours, une seule fois) :\n"
             . $link . "\n\n"
@@ -247,7 +247,7 @@ final class SuperAdminController
             throw HttpException::notFound();
         }
         $kind = (new Input($request->json()))->string('kind', 'Réinitialisation', 10);
-        $sent = (new AccountReset($this->services))->request($user, $kind, self::ACTOR, 'l’exploitant de Belprise', $this->baseUrl($request));
+        $sent = (new AccountReset($this->services))->request($user, $kind, self::ACTOR, 'l’exploitant de belprise', $this->baseUrl($request));
         $organization = $this->services->organizations()->find($organizationId);
         $this->services->platformLog()->add($organizationId, (string) ($organization['name'] ?? ''), self::ACTOR, 'Réinitialisation demandée', ($kind === 'password' ? 'mot de passe' : 'double authentification') . ' de ' . $user['name']);
 
@@ -280,12 +280,7 @@ final class SuperAdminController
 
     private function baseUrl(Request $request): string
     {
-        if ($this->services->config->appUrl !== null) {
-            return $this->services->config->appUrl;
-        }
-        $host = (string) $request->header('host');
-
-        return 'http://' . (preg_match('/^[A-Za-z0-9.-]+(:[0-9]{1,5})?$/D', $host) === 1 ? $host : 'localhost');
+        return $this->services->config->linkBase($request->header('host'));
     }
 
     /** "quotaGb": a number of gigabytes (1 Go = 10^9 bytes), or null for no limit. */

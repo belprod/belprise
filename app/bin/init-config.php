@@ -30,6 +30,11 @@ if (file_put_contents($target, $config) === false) {
     fwrite(STDERR, "Impossible d'écrire app/config.php.\n");
     exit(1);
 }
-chmod($target, 0644);
+// The secret protects the sessions, the media links and the two-factor keys: not readable by everyone.
+// Run as root in the development container: the web server's group may read it.
+chmod($target, 0640);
+if (function_exists('posix_getuid') && posix_getuid() === 0) {
+    @chgrp($target, 'www-data');
+}
 
 echo "app/config.php créé avec une clé secrète aléatoire.\n";

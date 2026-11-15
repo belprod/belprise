@@ -180,14 +180,16 @@ final class InstallerTest extends TestCase
         self::assertSame('server', $db->query("SELECT value FROM settings WHERE key = 'encoding.mode'")->fetchColumn());
     }
 
-    public function testTooManyWrongCodesReplaceTheCode(): void
+    public function testTooManyWrongCodesLockThatNetworkOnlyAndKeepTheCode(): void
     {
         $this->call('GET');
-        $first = $this->code();
+        $code = $this->code();
         for ($i = 0; $i < 10; $i++) {
             self::assertSame(403, $this->call('POST', '/installation', ['step' => 'unlock', 'code' => 'ZZZZZ-ZZZZZ'])->status);
         }
-        self::assertSame(429, $this->call('POST', '/installation', ['step' => 'unlock', 'code' => $first])->status);
-        self::assertNotSame($first, $this->code());
+        self::assertSame(429, $this->call('POST', '/installation', ['step' => 'unlock', 'code' => $code])->status, 'that network waits');
+        self::assertSame($code, $this->code(), 'the code never changes');
+        $other = (new Installer($this->root, $this->outbox))->handle(new Request('POST', '/installation', ['Host' => 'app.belprise.fr'], [], '', '198.51.100.20', [], [], ['step' => 'unlock', 'code' => $code]));
+        self::assertSame(200, $other->status, 'the owner, from another network, goes on');
     }
 }

@@ -26,6 +26,13 @@ final class AccountReset
     public const FORGOT_PER_NETWORK = 10;
     public const FORGOT_PER_ADDRESS = 3;
 
+    /**
+     * Shortest answer to "Mot de passe oublié ?", in seconds: an existing
+     * address (database, e-mail) must not answer later than an unknown one.
+     * The tests set it to 0.
+     */
+    public static float $forgotMinimumSeconds = 1.5;
+
     public function __construct(private readonly Services $services)
     {
     }
@@ -58,7 +65,7 @@ final class AccountReset
             (string) $user['email'],
             $kind === 'password' ? 'Belprise : choisissez un nouveau mot de passe' : 'Belprise : réinitialisez votre double authentification',
             'Bonjour ' . $user['name'] . ",\n\n"
-            . ucfirst($who) . ' a demandé la réinitialisation ' . $what . ' de votre compte Belprise (' . $user['email'] . ").\n\n"
+            . ucfirst($who) . ' a demandé la réinitialisation ' . $what . ' de votre compte belprise (' . $user['email'] . ").\n\n"
             . ($kind === 'password'
                 ? "Pour choisir un nouveau mot de passe, ouvrez ce lien (valable 1 heure, une seule fois) :\n"
                 : "Ouvrez ce lien (valable 1 heure, une seule fois) et saisissez votre mot de passe : la double authentification sera désactivée. Vous pourrez la réactiver avec votre nouveau téléphone dans « Mon compte ».\n")
@@ -83,6 +90,20 @@ final class AccountReset
         if ($wait > 0) {
             throw new HttpException(429, 'Trop de demandes. Nouvel essai possible dans ' . ($wait < 60 ? $wait . ' s' : (int) ceil($wait / 60) . ' min') . '.', ['retryAfter' => $wait]);
         }
+        $started = hrtime(true);
+        try {
+            $this->forgotAddress($email, $baseUrl);
+        } finally {
+            $left = self::$forgotMinimumSeconds - (hrtime(true) - $started) / 1e9;
+            if ($left > 0) {
+                usleep((int) ($left * 1e6));
+            }
+        }
+    }
+
+    private function forgotAddress(string $email, string $baseUrl): void
+    {
+        $limiter = $this->services->rateLimiter();
         $email = AdminAuth::validateEmail($email);
         if ($limiter->hit(self::FORGOT_ADDRESS_SCOPE, $this->services->clientKey('forgot|' . mb_strtolower($email)), self::FORGOT_PER_ADDRESS, 3600) > 0) {
             return;

@@ -59,7 +59,7 @@ $output = Database::transaction($db, function () use ($clients, $projects, $vide
         'bg_color' => '#f3ede4',
         'text_color' => '#1c1915',
         'accent_color' => '#a8481f',
-        'welcome_text' => "Bienvenue dans votre espace Belprise.\nRetrouvez ici les films de la collection printemps et du portrait de la maison.",
+        'welcome_text' => "Bienvenue dans votre espace belprise.\nRetrouvez ici les films de la collection printemps et du portrait de la maison.",
     ]);
     $lines = ['Espace client  ' . $baseUrl . '/' . $links->create('space', $clientId)['key']];
 

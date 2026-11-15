@@ -57,6 +57,28 @@ final class AccountRecoveryTest extends LifecycleTestCase
         self::assertSame(422, $this->forgot('pas-une-adresse')->status);
     }
 
+    public function testKnownAndUnknownAddressesTakeTheSameMinimumTime(): void
+    {
+        \Belprise\Security\AccountReset::$forgotMinimumSeconds = 0.3;
+        $this->session->data = [];
+        foreach (['lea@belprod.test', 'personne@belprod.test'] as $email) {
+            $t = hrtime(true);
+            $this->forgot($email);
+            self::assertGreaterThanOrEqual(0.3, (hrtime(true) - $t) / 1e9, $email);
+        }
+    }
+
+    public function testAForgedHostNeverEndsUpInTheLink(): void
+    {
+        $this->session->data = [];
+        $this->outbox->messages = [];
+        $csrf = (string) $this->decode($this->request('GET', '/api/admin/session'))['csrf'];
+        $this->request('POST', '/api/admin/forgot', ['Host' => 'evil.example', 'X-CSRF-Token' => $csrf, 'Content-Type' => 'application/json'], '{"email":"lea@belprod.test"}');
+        self::assertCount(1, $this->outbox->messages);
+        self::assertStringNotContainsString('evil.example', $this->outbox->messages[0]->text);
+        self::assertStringContainsString('http://localhost/reinitialisation/', $this->outbox->messages[0]->text);
+    }
+
     public function testTheLinkWorksOnceForAnHourAndKeepsTheTwoFactorAuthentication(): void
     {
         $this->asAdmin('lea@belprod.test', self::LEA_PASSWORD);

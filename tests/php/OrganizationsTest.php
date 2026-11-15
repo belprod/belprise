@@ -290,7 +290,7 @@ final class OrganizationsTest extends AppTestCase
         self::assertCount(1, $this->outbox->messages);
         $mail = $this->outbox->messages[0];
         self::assertSame('Lea@Example.com', $mail->to);
-        self::assertSame('Jules vous invite à rejoindre belprod sur Belprise', $mail->subject);
+        self::assertSame('Jules vous invite à rejoindre belprod sur belprise', $mail->subject);
         self::assertStringContainsString($invite['link'], $mail->text);
         self::assertStringContainsString('en tant que éditeur', $mail->text);
         self::assertMatchesRegularExpression('#/invitation/[A-Za-z0-9_-]{43}$#', $invite['link']);

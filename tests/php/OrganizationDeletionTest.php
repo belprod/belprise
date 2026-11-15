@@ -83,7 +83,7 @@ final class OrganizationDeletionTest extends LifecycleTestCase
         $this->asOperator();
         self::assertSame(422, $this->operator('POST', '/api/superadmin/organizations/1/deletion', ['confirm' => 'x'])->status);
         self::assertSame(200, $this->operator('POST', '/api/superadmin/organizations/1/deletion', ['confirm' => 'belprod'])->status);
-        self::assertStringContainsString('Seul l’exploitant de Belprise peut annuler', end($this->outbox->messages)->text);
+        self::assertStringContainsString('Seul l’exploitant de belprise peut annuler', end($this->outbox->messages)->text);
         // Nothing is deleted at once: there is no route for that.
         self::assertSame('1', (string) $this->db()->query('SELECT COUNT(*) FROM organizations')->fetchColumn());
 

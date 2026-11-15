@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # Checks a belprise installation from the outside (from any computer, with curl):
-#   scripts/verifier-production.sh https://app.belprise.fr https://belprise.fr
-# Read only: plain GET requests, nothing is created. Exit code 1 if a check fails.
+#   scripts/verifier-production.sh https://app.belprise.fr https://belprise.fr [https://demo.belprise.fr]
+# Read only: GET requests, and on the demo one upload request that must be refused;
+# nothing is created. Exit code 1 if a check fails.
 set -uo pipefail
 
 APP="${1:-https://app.belprise.fr}"
 SITE="${2:-https://belprise.fr}"
+DEMO="${3:-}"
 FAIL=0
 
 ok()   { printf '[ok]     %s\n' "$1"; }
@@ -48,6 +50,7 @@ same() { # label, existing path, missing path
 same 'fichier caché inaccessible' /.htaccess /.existe-pas-xyz
 same 'manifeste de build inaccessible' /assets/.vite/manifest.json /assets/.existe-pas/x.json
 expect 'plus de demande d’accès bêta (3.0)' 404 "$APP/inscription"
+curl -s "$APP/api/admin/session" | grep -q '"demo":null' && ok 'pas en mode démo' || ko 'l’application de production est en mode démo'
 a="$(curl -s "$APP/abcdefghij")"; b="$(curl -s "$APP/zyxwvutsrq")"
 [ "$a" = "$b" ] && ok '404 neutre identique d’une clé à l’autre' || ko '404 différentes selon la clé'
 redirects 'HTTP redirigé vers HTTPS' "$APP/admin"
@@ -64,6 +67,25 @@ expect 'page inconnue : 404' 404 "$SITE/page-inconnue"
 for page in telecharger documentation versions; do expect "page $page" 200 "$SITE/$page/"; done
 curl -s "$SITE/versions.json" | grep -q '"version"' && ok 'versions.json (avis de nouvelle version)' || ko 'versions.json absent ou illisible'
 redirects 'HTTP redirigé vers HTTPS' "$SITE/"
+
+if [ -n "$DEMO" ]; then
+  echo
+  echo "Démo : $DEMO"
+  D="$(curl -sI "$DEMO/admin")"
+  expect 'page de connexion' 200 "$DEMO/admin"
+  for h in 'x-robots-tag: .*noindex.*noai' 'content-security-policy: .*default-src' 'referrer-policy: no-referrer'; do
+    printf '%s' "$D" | grep -qiE "^$h" && ok "en-tête $h" || ko "en-tête manquant : $h"
+  done
+  J="$(curl -s "$DEMO/api/admin/session")"
+  printf '%s' "$J" | grep -q '"demo":{' && ok 'mode démo actif' || ko 'mode démo inactif'
+  printf '%s' "$J" | grep -q 'demo.belprise.fr\|"accounts":\[{' && ok 'comptes affichés sur l’écran de connexion' || ko 'comptes de démo absents'
+  printf '%s' "$J" | grep -q 'CC BY' && ok 'crédit des films' || ko 'crédit des films absent'
+  expect '/superadmin fermé' 404 "$DEMO/superadmin"
+  expect 'envoi de fichier refusé' 403 -X POST -H 'Content-Type: application/json' -d '{}' "$DEMO/api/admin/uploads"
+  expect 'envoi de logo refusé' 403 -X POST "$DEMO/api/admin/organization/logo"
+  expect 'clé de lien inconnue : 404' 404 "$DEMO/abcdefghij"
+  redirects 'HTTP redirigé vers HTTPS' "$DEMO/admin"
+fi
 
 echo
 [ "$FAIL" = 0 ] && echo 'Tout est en ordre.' || echo 'Au moins une vérification a échoué.'

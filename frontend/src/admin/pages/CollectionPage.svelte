@@ -296,7 +296,7 @@
               <span style:color={collection.textColor}>Aucun logo</span>
             {/if}
           </div>
-          <p class="panel__text">SVG, PNG ou WebP, 2 Mo au plus. Il remplace la marque Belprise sur la page de la collection.</p>
+          <p class="panel__text">SVG, PNG ou WebP, 2 Mo au plus. Il remplace la marque belprise sur la page de la collection.</p>
           {#if logoError}<p class="form-error" role="alert">{logoError}</p>{/if}
           <div class="form-actions can-edit">
             {#if isDemo(current.session)}

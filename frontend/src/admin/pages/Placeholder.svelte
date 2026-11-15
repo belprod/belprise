@@ -9,5 +9,5 @@
 
 <div class="empty">
   <p class="empty__title">Bientôt disponible</p>
-  <p class="empty__text">Cette section arrive dans une prochaine version de Belprise.</p>
+  <p class="empty__text">Cette section arrive dans une prochaine version de belprise.</p>
 </div>

@@ -73,7 +73,7 @@ final class TeamController
 
         $created = Database::transaction($services->db(), static function () use ($services, $org, $email, $role, $now): array {
             if ($services->users()->findByEmail($email) !== null) {
-                throw new HttpException(422, 'Cette adresse ne peut pas être invitée : elle a déjà un compte Belprise.', ['field' => 'email']);
+                throw new HttpException(422, 'Cette adresse ne peut pas être invitée : elle a déjà un compte belprise.', ['field' => 'email']);
             }
             foreach ($services->invitations()->pending($org) as $pending) {
                 if (mb_strtolower($pending['email']) === mb_strtolower($email)) {
@@ -152,9 +152,9 @@ final class TeamController
         $organization = $services->organizations()->find($org);
         $services->mailer()->send(new Message(
             (string) $target['email'],
-            'Vous êtes maintenant administrateur de ' . ($organization['name'] ?? '') . ' sur Belprise',
+            'Vous êtes maintenant administrateur de ' . ($organization['name'] ?? '') . ' sur belprise',
             "Bonjour,\n\n"
-            . $me['name'] . ' vous a transféré le rôle d’administrateur de l’organisation « ' . ($organization['name'] ?? '') . " » sur Belprise.\n\n"
+            . $me['name'] . ' vous a transféré le rôle d’administrateur de l’organisation « ' . ($organization['name'] ?? '') . " » sur belprise.\n\n"
             . "Vous gérez désormais l’équipe, les réglages de l’organisation et les suppressions définitives.\n\n"
             . "--\nBelprise, propulsé par belprod — https://belprod.fr\n",
         ));
@@ -314,7 +314,7 @@ final class TeamController
         $id = Database::transaction($services->db(), static function () use ($services, $invitation, $name, $hash): int {
             $org = (int) $invitation['organization_id'];
             if ($services->users()->findByEmail((string) $invitation['email']) !== null) {
-                throw new HttpException(409, 'Cette adresse a déjà un compte Belprise : connectez-vous.');
+                throw new HttpException(409, 'Cette adresse a déjà un compte belprise : connectez-vous.');
             }
             if ($invitation['role'] === Roles::ADMIN && $services->users()->count($org, Roles::ADMIN) > 0) {
                 throw new HttpException(409, 'Cette organisation a déjà un administrateur.');
@@ -353,9 +353,9 @@ final class TeamController
         $orgName = (string) ($organization['name'] ?? '');
         $sent = $this->services->mailer()->send(new Message(
             $email,
-            $inviter . ' vous invite à rejoindre ' . $orgName . ' sur Belprise',
+            $inviter . ' vous invite à rejoindre ' . $orgName . ' sur belprise',
             "Bonjour,\n\n"
-            . $inviter . ' vous invite à rejoindre l’organisation « ' . $orgName . ' » sur Belprise, en tant que '
+            . $inviter . ' vous invite à rejoindre l’organisation « ' . $orgName . ' » sur belprise, en tant que '
             . mb_strtolower(Roles::LABELS[$role]) . ".\n\n"
             . "Pour créer votre compte, ouvrez ce lien (valable 7 jours, une seule fois) :\n"
             . $link . "\n\n"
@@ -368,13 +368,7 @@ final class TeamController
 
     private function baseUrl(Request $request): string
     {
-        if ($this->services->config->appUrl !== null) {
-            return $this->services->config->appUrl;
-        }
-        // Development only (app_url not set): the host of the administrator's own request.
-        $host = (string) $request->header('host');
-
-        return 'http://' . (preg_match('/^[A-Za-z0-9.-]+(:[0-9]{1,5})?$/D', $host) === 1 ? $host : 'localhost');
+        return $this->services->config->linkBase($request->header('host'));
     }
 
     /**

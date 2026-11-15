@@ -50,12 +50,19 @@ final class EncodeJobs
      */
     public function next(int $now): ?array
     {
+        $stale = gmdate('Y-m-d H:i:s', $now - self::STALE_AFTER);
+        // Cut MAX_ATTEMPTS times (the process killed each time, e.g. by the host): failed for good,
+        // so that it never holds up the other versions.
+        $this->db->prepare(
+            "UPDATE encode_jobs SET status = 'failed', error = 'Encodage interrompu à chaque essai (processus arrêté par le serveur).',
+                updated_at = datetime('now') WHERE status = 'running' AND heartbeat_at < ? AND attempts >= ?"
+        )->execute([$stale, self::MAX_ATTEMPTS]);
         $stmt = $this->db->prepare(
             "SELECT * FROM encode_jobs
              WHERE status = 'queued' OR (status = 'running' AND heartbeat_at < ?)
              ORDER BY (status = 'queued'), created_at, id LIMIT 1"
         );
-        $stmt->execute([gmdate('Y-m-d H:i:s', $now - self::STALE_AFTER)]);
+        $stmt->execute([$stale]);
         $row = $stmt->fetch();
 
         return $row === false ? null : $row;

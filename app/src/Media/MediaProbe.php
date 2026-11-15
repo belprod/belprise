@@ -20,7 +20,7 @@ final class MediaProbe
     public static function read(string $ffprobe, string $file): array
     {
         $process = proc_open(
-            [$ffprobe, '-v', 'error', '-print_format', 'json', '-show_streams', '-show_format', $file],
+            [$ffprobe, '-v', 'error', '-print_format', 'json', '-show_streams', '-show_format', ...ServerEncoder::input($file)],
             [0 => ['file', '/dev/null', 'r'], 1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
             $pipes,
         );

@@ -185,7 +185,7 @@
               <span style:color={client.textColor}>Aucun logo</span>
             {/if}
           </div>
-          <p class="panel__text">SVG, PNG ou WebP, 2 Mo au plus. Il remplace la marque Belprise sur les pages du client.</p>
+          <p class="panel__text">SVG, PNG ou WebP, 2 Mo au plus. Il remplace la marque belprise sur les pages du client.</p>
           {#if logoError}<p class="form-error" role="alert">{logoError}</p>{/if}
           <div class="form-actions can-edit">
             {#if isDemo(current.session)}

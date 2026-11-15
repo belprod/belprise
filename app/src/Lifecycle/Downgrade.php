@@ -95,7 +95,7 @@ final class Downgrade
             . ' à ' . $usage['quotaLabel'] . ".\n\n"
             . 'Vous utilisez ' . Quota::gigabytes($usage['used'] + $usage['reserved']) . ' : il faut libérer ' . Quota::gigabytes($excess) . ".\n\n"
             . 'Date de purge : le ' . $day . ". D’ici là, les nouveaux envois sont bloqués ; vous pouvez toujours consulter, télécharger et supprimer vos vidéos.\n"
-            . "Si le stockage dépasse encore le quota à cette date, Belprise supprimera des vidéos entières jusqu’à repasser sous le quota : d’abord les vidéos archivées, puis les autres, en commençant par celles dont la dernière activité est la plus ancienne.\n\n"
+            . "Si le stockage dépasse encore le quota à cette date, belprise supprimera des vidéos entières jusqu’à repasser sous le quota : d’abord les vidéos archivées, puis les autres, en commençant par celles dont la dernière activité est la plus ancienne.\n\n"
             . "Pour récupérer vos masters : dans l’administration, ouvrez chaque vidéo ; chaque version a un bouton « Télécharger le master ».\n"
             . 'Pour libérer de l’espace : archivez les vidéos terminées (seule la version validée est gardée) ou supprimez celles dont vous n’avez plus besoin.',
         );
@@ -159,7 +159,7 @@ final class Downgrade
                     'Belprise : rappel, ' . Quota::gigabytes($excess) . ' à libérer avant le ' . $day,
                     'Rappel : le quota de « ' . $name . ' » est de ' . $usage['quotaLabel'] . ",\n"
                     . 'et vous utilisez ' . Quota::gigabytes($usage['used'] + $usage['reserved']) . ".\n\n"
-                    . 'Le ' . $day . ($step === 1 ? ', demain,' : '') . ', Belprise supprimera des vidéos entières jusqu’à libérer ' . Quota::gigabytes($excess)
+                    . 'Le ' . $day . ($step === 1 ? ', demain,' : '') . ', belprise supprimera des vidéos entières jusqu’à libérer ' . Quota::gigabytes($excess)
                     . " : d’abord les vidéos archivées, puis les autres, de la dernière activité la plus ancienne à la plus récente.\n\n"
                     . "Pour garder une vidéo : téléchargez son master (bouton « Télécharger le master » de chaque version), archivez ou supprimez d’autres vidéos, ou demandez un quota plus grand à l’exploitant.",
                 );

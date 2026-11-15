@@ -95,7 +95,7 @@ final class UpdateCheck
     private static function download(string $url): ?string
     {
         $context = stream_context_create([
-            'http' => ['timeout' => 5, 'user_agent' => 'belprise', 'ignore_errors' => false, 'follow_location' => 1, 'max_redirects' => 2],
+            'http' => ['timeout' => 5, 'user_agent' => 'belprise', 'ignore_errors' => false, 'follow_location' => 0],
             'ssl' => ['verify_peer' => true, 'verify_peer_name' => true],
         ]);
         $body = @file_get_contents($url, false, $context, 0, 64 * 1024);

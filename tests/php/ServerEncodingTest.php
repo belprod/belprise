@@ -151,6 +151,44 @@ final class ServerEncodingTest extends LifecycleTestCase
         self::assertSame('done', $this->encoder(1, static fn (): int => time() + EncodeJobs::STALE_AFTER + 1)->runOne()['status']);
     }
 
+    public function testAJobCutAtEveryTryFailsInsteadOfHoldingUpTheQueue(): void
+    {
+        $this->serverMode();
+        $first = $this->versionOf((int) $this->fixture['video']['id'], 1_000_000);
+        $jobs = new EncodeJobs($this->db());
+        $job = (int) $jobs->forVersion($first['id'])['id'];
+        $now = time();
+        for ($try = 1; $try <= EncodeJobs::MAX_ATTEMPTS; $try++) {
+            // Each run takes it again, then the process is killed with the cron.
+            $now += EncodeJobs::STALE_AFTER + 1;
+            self::assertSame($job, (int) $jobs->next($now)['id'], 'try ' . $try);
+            $jobs->start($job, $now);
+        }
+        self::assertNull($jobs->next($now + EncodeJobs::STALE_AFTER + 1), 'given up after the last try');
+        $row = $jobs->forVersion($first['id']);
+        self::assertSame('failed', $row['status']);
+        self::assertStringContainsString('interrompu', (string) $row['error']);
+    }
+
+    public function testFfmpegReadsTheMasterWithTheFormatOfItsExtensionAndLocalFilesOnly(): void
+    {
+        self::assertSame(['-protocol_whitelist', 'file', '-f', 'mov', '-i', '/d/m/master.mp4'], ServerEncoder::input('/d/m/master.mp4'));
+        self::assertSame(['-protocol_whitelist', 'file', '-f', 'mov', '-i', '/d/m/master.MOV'], ServerEncoder::input('/d/m/master.MOV'));
+        self::assertSame(['-protocol_whitelist', 'file', '-f', 'mxf', '-i', '/d/m/master.mxf'], ServerEncoder::input('/d/m/master.mxf'));
+        $this->serverMode();
+        $this->versionOf((int) $this->fixture['video']['id'], 1_000_000);
+        $log = $this->tmp . '/ffmpeg-args.log';
+        putenv('FAKE_FFMPEG_LOG=' . $log);
+        try {
+            $this->encoder()->runOne();
+        } finally {
+            putenv('FAKE_FFMPEG_LOG');
+        }
+        $args = file($log, FILE_IGNORE_NEW_LINES);
+        $i = array_search('-i', $args, true);
+        self::assertSame(['-protocol_whitelist', 'file', '-f', 'mov'], array_slice($args, $i - 4, 4));
+    }
+
     public function testTheServerMakesThePosterThumbnailAndSheetWhenTheVersionHasNone(): void
     {
         $this->serverMode();

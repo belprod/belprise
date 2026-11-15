@@ -88,6 +88,22 @@ final class Config
         );
     }
 
+    /**
+     * Base of the links in e-mails (invitations, resets): app_url. Without it
+     * (development), only a local host of the request is used: a forged Host
+     * header must never end up in a reset link.
+     */
+    public function linkBase(?string $host): string
+    {
+        if ($this->appUrl !== null) {
+            return $this->appUrl;
+        }
+        $host = (string) $host;
+        $local = preg_match('/^(localhost|127\.0\.0\.1|\[::1\])(:[0-9]{1,5})?$/D', $host) === 1;
+
+        return 'http://' . ($local ? $host : 'localhost');
+    }
+
     private static function mailFrom(mixed $value): string
     {
         if (!is_string($value) || $value === '' || preg_match('/[\r\n\0]/', $value) === 1) {

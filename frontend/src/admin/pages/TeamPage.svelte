@@ -544,12 +544,12 @@
   {#if lifecycle?.deletionAt}
     <p class="panel__text">
       <strong>Suppression programmée le {formatLongDate(lifecycle.deletionAt)}</strong>,
-      demandée par {lifecycle.deletionBy === 'operator' ? 'l’exploitant de Belprise' : lifecycle.deletionRequestedBy}.
+      demandée par {lifecycle.deletionBy === 'operator' ? 'l’exploitant de belprise' : lifecycle.deletionRequestedBy}.
       Ce jour-là, comptes, clients, projets, vidéos, masters, révisions, collections et liens seront effacés définitivement.
     </p>
     {#if deleteError}<p class="form-error" role="alert">{deleteError}</p>{/if}
     {#if lifecycle.deletionBy === 'operator'}
-      <p class="panel__text">Seul l’exploitant de Belprise peut annuler cette demande.</p>
+      <p class="panel__text">Seul l’exploitant de belprise peut annuler cette demande.</p>
     {:else}
       <div class="form-actions">
         <button class="btn btn--primary" type="button" disabled={deleteBusy} onclick={cancelDeletion}>Annuler la suppression</button>
@@ -586,7 +586,7 @@
 {#if journal.length > 0}
   <section class="panel journal" aria-labelledby="journal-title">
     <h2 class="panel__title" id="journal-title">Journal de l’organisation</h2>
-    <p class="panel__text">Actions de l’exploitant de Belprise, archivages, purges et demandes de suppression. L’exploitant n’a jamais accès à vos contenus.</p>
+    <p class="panel__text">Actions de l’exploitant de belprise, archivages, purges et demandes de suppression. L’exploitant n’a jamais accès à vos contenus.</p>
     <ul>
       {#each journal as entry, i (i)}
         <li><span class="muted">{formatDate(entry.at)}</span> — <strong>{entry.action}</strong>{#if entry.details}{' · '}{entry.details}{/if}</li>

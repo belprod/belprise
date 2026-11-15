@@ -183,12 +183,7 @@ final class App
     /** Address for the links in e-mails: app_url, or (development) the host of the request. */
     private function baseUrl(Request $request): string
     {
-        if ($this->config->appUrl !== null) {
-            return $this->config->appUrl;
-        }
-        $host = (string) $request->header('host');
-
-        return 'http://' . (preg_match('/^[A-Za-z0-9.-]+(:[0-9]{1,5})?$/D', $host) === 1 ? $host : 'localhost');
+        return $this->config->linkBase($request->header('host'));
     }
 
     private function router(Request $request, string $nonce): Router

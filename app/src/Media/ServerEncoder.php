@@ -185,7 +185,7 @@ final class ServerEncoder
 
         $posterTime = $seconds * 0.1;
         $poster = array_merge($base, [
-            '-ss', sprintf('%.3f', $posterTime), '-i', $master,
+            '-ss', sprintf('%.3f', $posterTime), ...self::input($master),
             '-filter_complex', '[0:v]split=2[a][b];[a]scale=w=min(1920\,iw):h=-2[p];[b]scale=640:-2[t]',
             '-map', '[p]', '-frames:v', '1', '-q:v', '3', $absolute . '/poster.jpg',
             '-map', '[t]', '-frames:v', '1', '-q:v', '4', $absolute . '/thumb.jpg',
@@ -201,7 +201,7 @@ final class ServerEncoder
         [$w, $h] = self::TILE;
         $sprite = array_merge($base, [
             // Tile i shows the frame at (i + 0.5) × interval.
-            '-ss', sprintf('%.3f', $interval / 2), '-i', $master,
+            '-ss', sprintf('%.3f', $interval / 2), ...self::input($master),
             '-vf', sprintf('fps=%.6f,scale=%d:%d:force_original_aspect_ratio=decrease,pad=%d:%d:(ow-iw)/2:(oh-ih)/2:black,tile=%dx%d', $count / $seconds, $w, $h, $w, $h, $columns, $rows),
             '-frames:v', '1', '-q:v', '5', $absolute . '/sprite.jpg',
         ]);
@@ -280,7 +280,7 @@ final class ServerEncoder
         $threads = (string) $this->threads;
 
         return array_merge(
-            [$this->ffmpeg['path'], '-hide_banner', '-nostdin', '-nostats', '-loglevel', 'error', '-y', '-threads', $threads, '-i', $master],
+            [$this->ffmpeg['path'], '-hide_banner', '-nostdin', '-nostats', '-loglevel', 'error', '-y', '-threads', $threads, ...self::input($master)],
             ['-map', '0:v:0'],
             $audio ? ['-map', '0:a:0'] : [],
             [
@@ -381,13 +381,27 @@ final class ServerEncoder
         ]);
     }
 
+    /**
+     * The master as input of ffmpeg / ffprobe: its format is the one of its
+     * extension (never guessed from the bytes), and only local files are read
+     * (an uploaded file posing as a playlist cannot pull in another file).
+     *
+     * @return list<string>
+     */
+    public static function input(string $master): array
+    {
+        $format = strtolower(pathinfo($master, PATHINFO_EXTENSION)) === 'mxf' ? 'mxf' : 'mov';
+
+        return ['-protocol_whitelist', 'file', '-f', $format, '-i', $master];
+    }
+
     private function hasAudio(string $master): bool
     {
         if ($this->ffmpeg['probe'] === null) {
             return false;
         }
         $process = proc_open(
-            [$this->ffmpeg['probe'], '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', $master],
+            [$this->ffmpeg['probe'], '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', ...self::input($master)],
             [1 => ['pipe', 'w'], 2 => ['pipe', 'w']],
             $pipes,
         );

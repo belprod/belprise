@@ -128,11 +128,11 @@ final class AccountResetTest extends LifecycleTestCase
         self::assertArrayNotHasKey('link', $this->decode($answer));
         $mail = $this->outbox->messages[0];
         self::assertSame(self::ADMIN_EMAIL, $mail->to, 'the link goes to the administrator, not to the operator');
-        self::assertStringContainsString('L’exploitant de Belprise a demandé', $mail->text);
+        self::assertStringContainsString('L’exploitant de belprise a demandé', $mail->text);
         self::assertSame(404, $this->operator('POST', "/api/superadmin/organizations/1/users/{$this->lea}/reset", ['kind' => 'password'])->status, 'not an administrator');
         self::assertSame(404, $this->operator('POST', "/api/superadmin/organizations/2/users/{$me}/reset", ['kind' => 'password'])->status);
         self::assertSame('Réinitialisation demandée', $this->decode($this->request('GET', '/api/superadmin/organizations'))['log'][0]['action']);
         // The organization sees it in its journal.
-        self::assertSame('Exploitant Belprise', $this->db()->query('SELECT actor FROM audit_log ORDER BY id DESC')->fetchColumn());
+        self::assertSame('Exploitant belprise', $this->db()->query('SELECT actor FROM audit_log ORDER BY id DESC')->fetchColumn());
     }
 }

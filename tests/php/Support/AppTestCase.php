@@ -29,6 +29,7 @@ abstract class AppTestCase extends TestCase
     protected function setUp(): void
     {
         $this->tmp = TempDir::create();
+        \Belprise\Security\AccountReset::$forgotMinimumSeconds = 0.0;
         mkdir($this->tmp . '/public/assets/.vite', 0700, true);
         file_put_contents($this->tmp . '/public/assets/.vite/manifest.json', json_encode([
             'src/admin/main.ts' => ['file' => 'admin-AAAAAAAA.js', 'isEntry' => true, 'css' => ['admin-BBBBBBBB.css']],
